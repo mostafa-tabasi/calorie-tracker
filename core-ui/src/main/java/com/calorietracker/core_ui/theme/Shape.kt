@@ -1,4 +1,4 @@
-package com.calorietracker.android.ui.theme
+package com.calorietracker.core_ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
