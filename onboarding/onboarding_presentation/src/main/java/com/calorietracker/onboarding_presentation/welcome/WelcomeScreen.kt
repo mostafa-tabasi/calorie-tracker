@@ -15,12 +15,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.calorietracker.core.R
+import com.calorietracker.core.navigation.Route
+import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.core_ui.theme.LocalSpacing
 import com.calorietracker.onboarding_presentation.components.ActionButton
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    onNavigate: (UiEvent.Navigate) -> Unit,
+) {
     val spacing = LocalSpacing.current
     Column(
         modifier = Modifier
@@ -37,7 +41,7 @@ fun WelcomeScreen() {
         Spacer(modifier = Modifier.height(spacing.medium))
         ActionButton(
             text = stringResource(id = R.string.next),
-            onClick = {},
+            onClick = { onNavigate(UiEvent.Navigate(Route.AGE)) },
             isEnabled = true,
         )
     }
@@ -47,6 +51,6 @@ fun WelcomeScreen() {
 @Composable
 fun WelcomeScreenPreview() {
     CalorieTrackerTheme {
-        WelcomeScreen()
+        WelcomeScreen(onNavigate = {})
     }
 }
