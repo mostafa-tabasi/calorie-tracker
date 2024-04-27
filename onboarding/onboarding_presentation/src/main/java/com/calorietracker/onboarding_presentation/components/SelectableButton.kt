@@ -41,7 +41,7 @@ fun SelectableButton(
                 shape = RoundedCornerShape(spacing.xxlLarge),
             )
             .clickable { onClick() }
-            .padding(spacing.small)
+            .padding(spacing.medium)
     ) {
         Text(
             text = text,
