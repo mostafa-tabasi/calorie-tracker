@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
@@ -70,16 +71,40 @@ fun GenderScreenLayout(
             horizontalArrangement = Arrangement.Center
         ) {
             MaleButton(
-                isSelected = selectedGender == Gender.Male,
+                isSelected = selectedGender is Gender.Male,
                 onGenderClick = { onGenderClick(Gender.Male) },
             )
             Spacer(modifier = Modifier.width(spacing.medium))
             FemaleButton(
-                isSelected = selectedGender == Gender.Female,
+                isSelected = selectedGender is Gender.Female,
                 onGenderClick = { onGenderClick(Gender.Female) },
             )
         }
         NextButton(onNextClick)
+    }
+}
+
+@Composable
+private fun layoutsConstraintSet(): ConstraintSet {
+    return ConstraintSet {
+        val questionText = createRefFor("questionText")
+        val selectableButtons = createRefFor("selectableButtons")
+        val nextButton = createRefFor("nextButton")
+
+        constrain(nextButton) {
+            bottom.linkTo(parent.bottom)
+            end.linkTo(parent.end)
+        }
+
+        constrain(questionText) {
+            top.linkTo(parent.top)
+        }
+
+        constrain(selectableButtons) {
+            bottom.linkTo(parent.bottom)
+        }
+
+        createVerticalChain(questionText, selectableButtons, chainStyle = ChainStyle.Packed)
     }
 }
 
@@ -104,6 +129,9 @@ private fun MaleButton(
     SelectableButton(
         text = stringResource(id = R.string.male),
         isSelected = isSelected,
+        textStyle = MaterialTheme.typography.button.copy(
+            fontWeight = FontWeight.Normal
+        ),
         color = MaterialTheme.colors.primaryVariant,
         selectedTextColor = MaterialTheme.colors.onPrimary,
         onClick = onGenderClick,
@@ -118,6 +146,9 @@ private fun FemaleButton(
     SelectableButton(
         text = stringResource(id = R.string.female),
         isSelected = isSelected,
+        textStyle = MaterialTheme.typography.button.copy(
+            fontWeight = FontWeight.Normal
+        ),
         color = MaterialTheme.colors.primaryVariant,
         selectedTextColor = MaterialTheme.colors.onPrimary,
         onClick = onGenderClick,
@@ -132,32 +163,6 @@ private fun NextButton(onNextClick: () -> Unit) {
         onClick = onNextClick,
         isEnabled = true,
     )
-}
-
-@Composable
-private fun layoutsConstraintSet(): ConstraintSet {
-    return ConstraintSet {
-        val questionText = createRefFor("questionText")
-        val selectableButtons = createRefFor("selectableButtons")
-        val nextButton = createRefFor("nextButton")
-
-        constrain(nextButton) {
-            bottom.linkTo(parent.bottom)
-            end.linkTo(parent.end)
-        }
-
-        constrain(questionText) {
-            top.linkTo(parent.top)
-            bottom.linkTo(selectableButtons.top)
-        }
-
-        constrain(selectableButtons) {
-            bottom.linkTo(parent.bottom)
-            top.linkTo(questionText.bottom)
-        }
-
-        createVerticalChain(questionText, selectableButtons, chainStyle = ChainStyle.Packed)
-    }
 }
 
 @Preview(showBackground = true)
