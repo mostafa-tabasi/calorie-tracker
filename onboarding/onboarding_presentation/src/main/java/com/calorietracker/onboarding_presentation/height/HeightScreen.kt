@@ -1,4 +1,4 @@
-package com.calorietracker.onboarding_presentation.age
+package com.calorietracker.onboarding_presentation.height
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,10 +26,10 @@ import com.calorietracker.onboarding_presentation.components.ActionButton
 import com.calorietracker.onboarding_presentation.components.UnitTextField
 
 @Composable
-fun AgeScreen(
+fun HeightScreen(
     scaffoldState: ScaffoldState,
     onNavigate: (UiEvent.Navigate) -> Unit,
-    viewModel: AgeViewModel = hiltViewModel(),
+    viewModel: HeightViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -37,28 +37,27 @@ fun AgeScreen(
         viewModel.uiEvent.collect {
             when (it) {
                 is UiEvent.Navigate -> onNavigate(it)
-                is UiEvent.ShowSnackbar -> {
+                is UiEvent.ShowSnackbar ->
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = it.message.asString(context),
+                        it.message.asString(context)
                     )
-                }
 
                 else -> Unit
             }
         }
     }
 
-    AgeScreenLayout(
-        age = viewModel.age,
-        onAgeChange = viewModel::onAgeChange,
-        onNextClick = viewModel::onNextClick
+    HeightScreenLayout(
+        height = viewModel.height,
+        onHeightChange = viewModel::onWeightChange,
+        onNextClick = viewModel::onNextClick,
     )
 }
 
 @Composable
-fun AgeScreenLayout(
-    age: String,
-    onAgeChange: (String) -> Unit,
+private fun HeightScreenLayout(
+    height: String,
+    onHeightChange: (String) -> Unit,
     onNextClick: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
@@ -69,7 +68,7 @@ fun AgeScreenLayout(
             .padding(spacing.medium),
     ) {
         Description()
-        AgeTextField(age, onAgeChange)
+        HeightTextField(height, onHeightChange)
         NextButton(onNextClick)
     }
 }
@@ -78,23 +77,23 @@ fun AgeScreenLayout(
 private fun layoutsConstraintSet(): ConstraintSet {
     return ConstraintSet {
         val questionText = createRefFor("questionText")
-        val ageTextField = createRefFor("ageTextField")
+        val heightTextField = createRefFor("heightTextField")
         val nextButton = createRefFor("nextButton")
 
         constrain(questionText) { top.linkTo(parent.top) }
-        constrain(ageTextField) { bottom.linkTo(parent.bottom) }
+        constrain(heightTextField) { bottom.linkTo(parent.bottom) }
         constrain(nextButton) {
             end.linkTo(parent.end)
             bottom.linkTo(parent.bottom)
         }
-        createVerticalChain(questionText, ageTextField, chainStyle = ChainStyle.Packed)
+        createVerticalChain(questionText, heightTextField, chainStyle = ChainStyle.Packed)
     }
 }
 
 @Composable
 private fun Description() {
     Text(
-        text = stringResource(R.string.whats_your_age),
+        text = stringResource(R.string.whats_your_height),
         style = MaterialTheme.typography.h1,
         textAlign = TextAlign.Center,
         modifier = Modifier
@@ -105,17 +104,17 @@ private fun Description() {
 }
 
 @Composable
-private fun AgeTextField(
-    age: String,
-    onAgeChange: (String) -> Unit,
+private fun HeightTextField(
+    height: String,
+    onHeightChange: (String) -> Unit,
 ) {
     UnitTextField(
-        value = age,
-        onValueChange = { onAgeChange(it) },
-        unit = stringResource(id = R.string.years),
+        value = height,
+        onValueChange = { onHeightChange(it) },
+        unit = stringResource(id = R.string.cm),
         modifier = Modifier
             .fillMaxWidth()
-            .layoutId("ageTextField")
+            .layoutId("heightTextField")
     )
 }
 
@@ -133,8 +132,8 @@ private fun NextButton(
 
 @Preview(showBackground = true)
 @Composable
-private fun AgeScreenPreview() {
+private fun HeightScreenPreview() {
     CalorieTrackerTheme {
-        AgeScreenLayout("17", {}, {})
+        HeightScreenLayout("174", {}, {})
     }
 }
