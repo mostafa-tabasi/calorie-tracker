@@ -1,4 +1,4 @@
-package com.calorietracker.onboarding_presentation.height
+package com.calorietracker.onboarding_presentation.weight
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,46 +18,47 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HeightViewModel @Inject constructor(
+class WeightViewModel @Inject constructor(
     private var preferences: Preferences,
     private var filterOutNumber: FilterOutNumber,
 ) : ViewModel() {
 
-    var height by mutableStateOf("0")
+    var weight by mutableStateOf("0.0")
         private set
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onWeightChange(value: String) {
-        height = filterOutNumber(
+        weight = filterOutNumber(
             value,
             maxLength = 3,
+            isDecimal = true,
         )
     }
 
     fun onNextClick() {
         viewModelScope.launch {
-            val heightNumber = height.toIntOrNull() ?: run {
+            val weightNumber = weight.toFloatOrNull() ?: run {
                 _uiEvent.send(
                     UiEvent.ShowSnackbar(
-                        UiText.StringResource(R.string.error_height_cant_be_empty)
+                        UiText.StringResource(R.string.error_weight_cant_be_empty)
                     )
                 )
                 return@launch
             }
 
-            if (heightNumber == 0) {
+            if (weightNumber == 0f) {
                 _uiEvent.send(
                     UiEvent.ShowSnackbar(
-                        UiText.StringResource(R.string.error_height_cant_be_zero)
+                        UiText.StringResource(R.string.error_weight_cant_be_zero)
                     )
                 )
                 return@launch
             }
 
-            preferences.saveHeight(heightNumber)
-            _uiEvent.send(UiEvent.Navigate(Route.WEIGHT))
+            preferences.saveWeight(weightNumber)
+            _uiEvent.send(UiEvent.Navigate(Route.ACTIVITY))
         }
     }
 }

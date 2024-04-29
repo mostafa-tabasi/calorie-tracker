@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calorietracker.core.R
 import com.calorietracker.core.domain.prefrences.Preferences
-import com.calorietracker.core.domain.usecases.FilterOutDigits
+import com.calorietracker.core.domain.usecases.FilterOutNumber
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.UiText
 import com.calorietracker.core.utils.navigation.Route
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AgeViewModel @Inject constructor(
     private var preferences: Preferences,
-    private var filterOutDigits: FilterOutDigits,
+    private var filterOutNumber: FilterOutNumber,
 ) : ViewModel() {
 
     var age by mutableStateOf("0")
@@ -30,9 +30,10 @@ class AgeViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onAgeChange(value: String) {
-        if (value.length <= 3) {
-            age = filterOutDigits(value)
-        }
+        age = filterOutNumber(
+            value,
+            maxLength = 3,
+        )
     }
 
     fun onNextClick() {
