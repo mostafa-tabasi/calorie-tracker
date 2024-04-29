@@ -38,4 +38,10 @@ object AppModule {
     fun provideFilterOutNumberUseCase(): FilterOutNumber {
         return FilterOutNumber()
     }
+
+    @Provides
+    @Singleton
+    fun provideValidateNumberUseCase(): ValidateNumber {
+        return ValidateNumber()
+    }
 }

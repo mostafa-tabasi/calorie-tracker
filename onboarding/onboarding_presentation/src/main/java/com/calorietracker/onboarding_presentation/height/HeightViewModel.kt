@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.calorietracker.core.R
+import com.calorietracker.core.domain.models.ValidationResult
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.domain.usecases.FilterOutNumber
+import com.calorietracker.core.domain.usecases.ValidateNumber
 import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.UiText
 import com.calorietracker.core.utils.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -21,6 +21,7 @@ import javax.inject.Inject
 class HeightViewModel @Inject constructor(
     private var preferences: Preferences,
     private var filterOutNumber: FilterOutNumber,
+    private var validateNumber: ValidateNumber,
 ) : ViewModel() {
 
     var height by mutableStateOf("0")
@@ -38,26 +39,15 @@ class HeightViewModel @Inject constructor(
 
     fun onNextClick() {
         viewModelScope.launch {
-            val heightNumber = height.toIntOrNull() ?: run {
-                _uiEvent.send(
-                    UiEvent.ShowSnackbar(
-                        UiText.StringResource(R.string.error_height_cant_be_empty)
-                    )
-                )
-                return@launch
+            validateNumber.isHeightValid(height).run {
+                when (this) {
+                    is ValidationResult.Fail -> _uiEvent.send(UiEvent.ShowSnackbar(message))
+                    is ValidationResult.Success -> {
+                        preferences.saveHeight(number)
+                        _uiEvent.send(UiEvent.Navigate(Route.WEIGHT))
+                    }
+                }
             }
-
-            if (heightNumber == 0) {
-                _uiEvent.send(
-                    UiEvent.ShowSnackbar(
-                        UiText.StringResource(R.string.error_height_cant_be_zero)
-                    )
-                )
-                return@launch
-            }
-
-            preferences.saveHeight(heightNumber)
-            _uiEvent.send(UiEvent.Navigate(Route.WEIGHT))
         }
     }
 }

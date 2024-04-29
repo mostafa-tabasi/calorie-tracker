@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.calorietracker.core.R
+import com.calorietracker.core.domain.models.ValidationResult
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.domain.usecases.FilterOutNumber
+import com.calorietracker.core.domain.usecases.ValidateNumber
 import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.UiText
 import com.calorietracker.core.utils.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -21,6 +21,7 @@ import javax.inject.Inject
 class AgeViewModel @Inject constructor(
     private var preferences: Preferences,
     private var filterOutNumber: FilterOutNumber,
+    private var validateNumber: ValidateNumber,
 ) : ViewModel() {
 
     var age by mutableStateOf("0")
@@ -38,26 +39,15 @@ class AgeViewModel @Inject constructor(
 
     fun onNextClick() {
         viewModelScope.launch {
-            val ageNumber = age.toIntOrNull() ?: run {
-                _uiEvent.send(
-                    UiEvent.ShowSnackbar(
-                        UiText.StringResource(R.string.error_age_cant_be_empty)
-                    )
-                )
-                return@launch
+            validateNumber.isAgeValid(age).run {
+                when (this) {
+                    is ValidationResult.Fail -> _uiEvent.send(UiEvent.ShowSnackbar(message))
+                    is ValidationResult.Success -> {
+                        preferences.saveAge(number)
+                        _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
+                    }
+                }
             }
-
-            if (ageNumber == 0) {
-                _uiEvent.send(
-                    UiEvent.ShowSnackbar(
-                        UiText.StringResource(R.string.error_age_cant_be_zero)
-                    )
-                )
-                return@launch
-            }
-
-            preferences.saveAge(ageNumber)
-            _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
         }
     }
 }
