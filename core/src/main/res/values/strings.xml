@@ -46,8 +46,11 @@
   <string name="error_invalid_values">These are not valid values</string>
   <string name="what_are_your_nutrient_goals">What are your nutrient goals?</string>
   <string name="percent_proteins">% proteins</string>
+  <string name="error_proteins_cant_be_empty">The proteins ratio can\'t be empty</string>
   <string name="percent_fats">% fats</string>
+  <string name="error_fats_cant_be_empty">The fats ratio can\'t be empty</string>
   <string name="percent_carbs">% carbs</string>
+  <string name="error_carbs_cant_be_empty">The carbs ratio can\'t be empty</string>
   <string name="high">High</string>
   <string name="medium">Medium</string>
   <string name="years">years</string>

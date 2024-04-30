@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calorietracker.core.domain.models.ValidationResult
 import com.calorietracker.core.domain.prefrences.Preferences
-import com.calorietracker.core.domain.usecases.FilterOutNumber
-import com.calorietracker.core.domain.usecases.ValidateNumber
+import com.calorietracker.core.domain.use_cases.FilterOutNumber
+import com.calorietracker.core.domain.use_cases.ValidateNumber
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,9 +42,9 @@ class WeightViewModel @Inject constructor(
         viewModelScope.launch {
             validateNumber.isWeightValid(weight).run {
                 when (this) {
-                    is ValidationResult.Fail -> _uiEvent.send(UiEvent.ShowSnackbar(message))
+                    is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))
                     is ValidationResult.Success -> {
-                        preferences.saveWeight(number)
+                        preferences.saveWeight(data)
                         _uiEvent.send(UiEvent.Navigate(Route.ACTIVITY))
                     }
                 }
