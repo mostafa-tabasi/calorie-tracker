@@ -23,6 +23,7 @@ import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.core_ui.theme.LocalSpacing
 import com.calorietracker.onboarding_presentation.components.ActionButton
+import com.calorietracker.onboarding_presentation.components.DescriptionText
 import com.calorietracker.onboarding_presentation.components.UnitTextField
 
 @Composable
@@ -56,7 +57,7 @@ fun AgeScreen(
 }
 
 @Composable
-fun AgeScreenLayout(
+private fun AgeScreenLayout(
     age: String,
     onAgeChange: (String) -> Unit,
     onNextClick: () -> Unit,
@@ -68,7 +69,10 @@ fun AgeScreenLayout(
             .fillMaxSize()
             .padding(spacing.medium),
     ) {
-        Description()
+        DescriptionText(
+            id = "questionText",
+            description = stringResource(R.string.whats_your_age),
+        )
         AgeTextField(age, onAgeChange)
         NextButton(onNextClick)
     }
@@ -89,19 +93,6 @@ private fun layoutsConstraintSet(): ConstraintSet {
         }
         createVerticalChain(questionText, ageTextField, chainStyle = ChainStyle.Packed)
     }
-}
-
-@Composable
-private fun Description() {
-    Text(
-        text = stringResource(R.string.whats_your_age),
-        style = MaterialTheme.typography.h1,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .layoutId("questionText")
-            .fillMaxWidth()
-            .padding(bottom = LocalSpacing.current.medium)
-    )
 }
 
 @Composable

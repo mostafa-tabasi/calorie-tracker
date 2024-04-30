@@ -23,6 +23,7 @@ import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.core_ui.theme.LocalSpacing
 import com.calorietracker.onboarding_presentation.components.ActionButton
+import com.calorietracker.onboarding_presentation.components.DescriptionText
 import com.calorietracker.onboarding_presentation.components.UnitTextField
 
 @Composable
@@ -67,7 +68,10 @@ private fun HeightScreenLayout(
             .fillMaxSize()
             .padding(spacing.medium),
     ) {
-        Description()
+        DescriptionText(
+            id = "questionText",
+            description = stringResource(R.string.whats_your_height),
+        )
         HeightTextField(height, onHeightChange)
         NextButton(onNextClick)
     }
@@ -88,19 +92,6 @@ private fun layoutsConstraintSet(): ConstraintSet {
         }
         createVerticalChain(questionText, heightTextField, chainStyle = ChainStyle.Packed)
     }
-}
-
-@Composable
-private fun Description() {
-    Text(
-        text = stringResource(R.string.whats_your_height),
-        style = MaterialTheme.typography.h1,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .layoutId("questionText")
-            .fillMaxWidth()
-            .padding(bottom = LocalSpacing.current.medium)
-    )
 }
 
 @Composable

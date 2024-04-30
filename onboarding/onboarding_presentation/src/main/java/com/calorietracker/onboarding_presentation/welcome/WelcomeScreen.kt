@@ -6,13 +6,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.calorietracker.core.R
 import com.calorietracker.core.utils.UiEvent
@@ -20,6 +17,7 @@ import com.calorietracker.core.utils.navigation.Route
 import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.core_ui.theme.LocalSpacing
 import com.calorietracker.onboarding_presentation.components.ActionButton
+import com.calorietracker.onboarding_presentation.components.DescriptionText
 
 @Composable
 fun WelcomeScreen(
@@ -33,11 +31,7 @@ fun WelcomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = stringResource(R.string.welcome_text),
-            style = MaterialTheme.typography.h1,
-            textAlign = TextAlign.Center,
-        )
+        DescriptionText(description = stringResource(R.string.welcome_text))
         Spacer(modifier = Modifier.height(spacing.medium))
         ActionButton(
             text = stringResource(id = R.string.next),
@@ -49,7 +43,7 @@ fun WelcomeScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun WelcomeScreenPreview() {
+private fun WelcomeScreenPreview() {
     CalorieTrackerTheme {
         WelcomeScreen(onNavigate = {})
     }

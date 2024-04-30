@@ -27,6 +27,7 @@ import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.core_ui.theme.LocalSpacing
 import com.calorietracker.onboarding_presentation.components.ActionButton
+import com.calorietracker.onboarding_presentation.components.DescriptionText
 import com.calorietracker.onboarding_presentation.components.SelectableButton
 
 @Composable
@@ -63,7 +64,10 @@ private fun GoalScreenScreenLayout(
             .fillMaxSize()
             .padding(spacing.medium),
     ) {
-        Description()
+        DescriptionText(
+            id = "questionText",
+            description = stringResource(R.string.lose_keep_or_gain_weight),
+        )
         Row(
             modifier = Modifier
                 .layoutId("selectableButtons")
@@ -73,19 +77,19 @@ private fun GoalScreenScreenLayout(
             GoalButton(
                 goalTitle = stringResource(id = R.string.lose),
                 isSelected = selectedGoal is Goal.LoseWeight,
-                onLevelClick = { onGoalClick(Goal.LoseWeight) },
+                onGoalClick = { onGoalClick(Goal.LoseWeight) },
             )
             Spacer(modifier = Modifier.width(spacing.medium))
             GoalButton(
                 goalTitle = stringResource(id = R.string.keep),
                 isSelected = selectedGoal is Goal.KeepWeight,
-                onLevelClick = { onGoalClick(Goal.KeepWeight) },
+                onGoalClick = { onGoalClick(Goal.KeepWeight) },
             )
             Spacer(modifier = Modifier.width(spacing.medium))
             GoalButton(
                 goalTitle = stringResource(id = R.string.gain),
                 isSelected = selectedGoal is Goal.GainWeight,
-                onLevelClick = { onGoalClick(Goal.GainWeight) },
+                onGoalClick = { onGoalClick(Goal.GainWeight) },
             )
         }
         NextButton(onNextClick)
@@ -117,23 +121,10 @@ private fun layoutsConstraintSet(): ConstraintSet {
 }
 
 @Composable
-private fun Description() {
-    Text(
-        text = stringResource(R.string.lose_keep_or_gain_weight),
-        style = MaterialTheme.typography.h1,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .layoutId("questionText")
-            .fillMaxWidth()
-            .padding(bottom = LocalSpacing.current.medium)
-    )
-}
-
-@Composable
 private fun GoalButton(
     goalTitle: String,
     isSelected: Boolean,
-    onLevelClick: () -> Unit,
+    onGoalClick: () -> Unit,
 ) {
     SelectableButton(
         text = goalTitle,
@@ -143,7 +134,7 @@ private fun GoalButton(
         ),
         color = MaterialTheme.colors.primaryVariant,
         selectedTextColor = MaterialTheme.colors.onPrimary,
-        onClick = onLevelClick,
+        onClick = onGoalClick,
     )
 }
 

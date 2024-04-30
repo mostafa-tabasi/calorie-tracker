@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -27,6 +25,7 @@ import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.core_ui.theme.LocalSpacing
 import com.calorietracker.onboarding_presentation.components.ActionButton
+import com.calorietracker.onboarding_presentation.components.DescriptionText
 import com.calorietracker.onboarding_presentation.components.SelectableButton
 
 @Composable
@@ -51,7 +50,7 @@ fun ActivityLevelScreen(
 }
 
 @Composable
-fun ActivityLevelScreenLayout(
+private fun ActivityLevelScreenLayout(
     selectedLevel: ActivityLevel,
     onLevelClick: (ActivityLevel) -> Unit,
     onNextClick: () -> Unit,
@@ -63,7 +62,10 @@ fun ActivityLevelScreenLayout(
             .fillMaxSize()
             .padding(spacing.medium),
     ) {
-        Description()
+        DescriptionText(
+            id = "questionText",
+            description = stringResource(R.string.whats_your_activity_level),
+        )
         Row(
             modifier = Modifier
                 .layoutId("selectableButtons")
@@ -117,19 +119,6 @@ private fun layoutsConstraintSet(): ConstraintSet {
 }
 
 @Composable
-private fun Description() {
-    Text(
-        text = stringResource(R.string.whats_your_activity_level),
-        style = MaterialTheme.typography.h1,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .layoutId("questionText")
-            .fillMaxWidth()
-            .padding(bottom = LocalSpacing.current.medium)
-    )
-}
-
-@Composable
 private fun ActivityLevelButton(
     levelName: String,
     isSelected: Boolean,
@@ -159,7 +148,7 @@ private fun NextButton(onNextClick: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun ActivityLevelScreenPreview() {
+private fun ActivityLevelScreenPreview() {
     CalorieTrackerTheme {
         ActivityLevelScreenLayout(selectedLevel = ActivityLevel.Medium, {}, {})
     }

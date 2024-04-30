@@ -27,6 +27,7 @@ import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.core_ui.theme.LocalSpacing
 import com.calorietracker.onboarding_presentation.components.ActionButton
+import com.calorietracker.onboarding_presentation.components.DescriptionText
 import com.calorietracker.onboarding_presentation.components.SelectableButton
 
 @Composable
@@ -63,19 +64,24 @@ fun GenderScreenLayout(
             .fillMaxSize()
             .padding(spacing.medium),
     ) {
-        Description()
+        DescriptionText(
+            id = "questionText",
+            description = stringResource(R.string.whats_your_gender),
+        )
         Row(
             modifier = Modifier
                 .layoutId("selectableButtons")
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            MaleButton(
+            GenderButton(
+                genderTitle = stringResource(id = R.string.male),
                 isSelected = selectedGender is Gender.Male,
                 onGenderClick = { onGenderClick(Gender.Male) },
             )
             Spacer(modifier = Modifier.width(spacing.medium))
-            FemaleButton(
+            GenderButton(
+                genderTitle = stringResource(id = R.string.female),
                 isSelected = selectedGender is Gender.Female,
                 onGenderClick = { onGenderClick(Gender.Female) },
             )
@@ -109,42 +115,13 @@ private fun layoutsConstraintSet(): ConstraintSet {
 }
 
 @Composable
-private fun Description() {
-    Text(
-        text = stringResource(R.string.whats_your_gender),
-        style = MaterialTheme.typography.h1,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .layoutId("questionText")
-            .fillMaxWidth()
-            .padding(bottom = LocalSpacing.current.medium)
-    )
-}
-
-@Composable
-private fun MaleButton(
+private fun GenderButton(
+    genderTitle: String,
     isSelected: Boolean,
     onGenderClick: () -> Unit,
 ) {
     SelectableButton(
-        text = stringResource(id = R.string.male),
-        isSelected = isSelected,
-        textStyle = MaterialTheme.typography.button.copy(
-            fontWeight = FontWeight.Normal
-        ),
-        color = MaterialTheme.colors.primaryVariant,
-        selectedTextColor = MaterialTheme.colors.onPrimary,
-        onClick = onGenderClick,
-    )
-}
-
-@Composable
-private fun FemaleButton(
-    isSelected: Boolean,
-    onGenderClick: () -> Unit,
-) {
-    SelectableButton(
-        text = stringResource(id = R.string.female),
+        text = genderTitle,
         isSelected = isSelected,
         textStyle = MaterialTheme.typography.button.copy(
             fontWeight = FontWeight.Normal
@@ -167,7 +144,7 @@ private fun NextButton(onNextClick: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun GenderScreenPreview() {
+private fun GenderScreenPreview() {
     CalorieTrackerTheme {
         GenderScreenLayout(selectedGender = Gender.Male, {}, {})
     }
