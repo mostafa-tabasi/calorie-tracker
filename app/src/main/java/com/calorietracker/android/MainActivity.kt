@@ -17,6 +17,7 @@ import com.calorietracker.core_ui.theme.CalorieTrackerTheme
 import com.calorietracker.onboarding_presentation.activity_level.ActivityLevelScreen
 import com.calorietracker.onboarding_presentation.age.AgeScreen
 import com.calorietracker.onboarding_presentation.gender.GenderScreen
+import com.calorietracker.onboarding_presentation.goal.GoalScreen
 import com.calorietracker.onboarding_presentation.height.HeightScreen
 import com.calorietracker.onboarding_presentation.weight.WeightScreen
 import com.calorietracker.onboarding_presentation.welcome.WelcomeScreen
@@ -67,8 +68,10 @@ class MainActivity : ComponentActivity() {
                         composable(Route.ACTIVITY) {
                             ActivityLevelScreen(onNavigate = navController::navigate)
                         }
+                        composable(Route.GOAL) {
+                            GoalScreen(onNavigate = navController::navigate)
+                        }
                         composable(Route.NUTRIENT_GOAL) {}
-                        composable(Route.GOAL) {}
                         composable(Route.TRACKER_OVERVIEW) {}
                         composable(Route.SEARCH) {}
                     }
