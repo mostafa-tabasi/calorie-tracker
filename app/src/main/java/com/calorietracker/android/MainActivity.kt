@@ -12,16 +12,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.calorietracker.android.utils.navigation.navigate
+import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 import com.calorietracker.core.utils.navigation.Route
-import com.calorietracker.core_ui.theme.CalorieTrackerTheme
-import com.calorietracker.onboarding_presentation.activity_level.ActivityLevelScreen
-import com.calorietracker.onboarding_presentation.age.AgeScreen
-import com.calorietracker.onboarding_presentation.gender.GenderScreen
-import com.calorietracker.onboarding_presentation.goal.GoalScreen
-import com.calorietracker.onboarding_presentation.height.HeightScreen
-import com.calorietracker.onboarding_presentation.nutrient_goal.NutrientGoalScreen
-import com.calorietracker.onboarding_presentation.weight.WeightScreen
-import com.calorietracker.onboarding_presentation.welcome.WelcomeScreen
+import com.calorietracker.onboarding.presentation.activity_level.ActivityLevelScreen
+import com.calorietracker.onboarding.presentation.age.AgeScreen
+import com.calorietracker.onboarding.presentation.gender.GenderScreen
+import com.calorietracker.onboarding.presentation.goal.GoalScreen
+import com.calorietracker.onboarding.presentation.height.HeightScreen
+import com.calorietracker.onboarding.presentation.nutrient_goal.NutrientGoalScreen
+import com.calorietracker.onboarding.presentation.weight.WeightScreen
+import com.calorietracker.onboarding.presentation.welcome.WelcomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
