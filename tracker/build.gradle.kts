@@ -50,6 +50,12 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material)
     implementation(libs.androidx.constraintlayout.compose)
+
+    implementation(libs.google.code.gson)
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.gson)
+    implementation(libs.squareup.okhttp3.logging.interceptor)
+
     implementation(libs.dagger.hilt)
     implementation(libs.dagger.hilt.gradle.plugin)
     implementation(libs.androidx.hilt.navigation)

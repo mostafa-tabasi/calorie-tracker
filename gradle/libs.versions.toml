@@ -13,8 +13,9 @@ navigation = "2.7.7"
 hilt = "2.49"
 hiltNavigation = "1.2.0"
 constraint = "1.0.1"
-appcompat = "1.6.1"
-material = "1.10.0"
+gson = "2.10.1"
+retrofit = "2.9.0"
+loggingInterceptor = "5.0.0-alpha.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,8 +38,10 @@ dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", ve
 dagger-hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 androidx-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraint" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+google-code-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+squareup-retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+squareup-okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
