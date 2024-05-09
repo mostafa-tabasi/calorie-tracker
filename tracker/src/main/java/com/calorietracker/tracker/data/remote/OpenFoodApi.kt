@@ -1,6 +1,7 @@
 package com.calorietracker.tracker.data.remote
 
 import com.calorietracker.tracker.data.remote.dto.SearchDto
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,5 +15,5 @@ interface OpenFoodApi {
         @Query("search_terms") query: String,
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int,
-    ): SearchDto
+    ): Response<SearchDto>
 }
