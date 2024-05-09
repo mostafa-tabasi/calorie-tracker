@@ -1,9 +1,13 @@
 package com.calorietracker.tracker.di
 
+import android.app.Application
+import androidx.room.Room
+import com.calorietracker.tracker.data.local.TrackerDatabase
 import com.calorietracker.tracker.data.remote.OpenFoodApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,5 +39,15 @@ object TrackerModule {
             .client(client)
             .build()
             .create()
+    }
+
+    @Provides
+    @Singleton
+    fun providesTrackerDatabase(@ApplicationContext app: Application): TrackerDatabase {
+        return Room.databaseBuilder(
+            app,
+            TrackerDatabase::class.java,
+            "tracker_db"
+        ).build()
     }
 }
