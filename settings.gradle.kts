@@ -19,6 +19,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Calorie Tracker"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "CalorieTracker"
 include(":app")
- 
+include(":core")
+include(":onboarding")
+include(":tracker")
