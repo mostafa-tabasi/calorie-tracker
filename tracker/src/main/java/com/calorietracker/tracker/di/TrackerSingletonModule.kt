@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object TrackerModule {
+object TrackerSingletonModule {
 
     @Provides
     @Singleton

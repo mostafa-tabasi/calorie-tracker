@@ -4,7 +4,6 @@ sealed class ActivityLevel(val name: String) {
     data object Low : ActivityLevel("low")
     data object Medium : ActivityLevel("medium")
     data object High : ActivityLevel("high")
-    data object Undefined : ActivityLevel("undefined")
 
     companion object {
         fun fromString(name: String): ActivityLevel {
@@ -12,7 +11,7 @@ sealed class ActivityLevel(val name: String) {
                 "low" -> Low
                 "medium" -> Medium
                 "high" -> High
-                else -> Undefined
+                else -> Medium
             }
         }
     }
