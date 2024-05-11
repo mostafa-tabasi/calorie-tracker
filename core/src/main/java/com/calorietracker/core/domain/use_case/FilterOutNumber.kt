@@ -1,4 +1,4 @@
-package com.calorietracker.core.domain.use_cases
+package com.calorietracker.core.domain.use_case
 
 class FilterOutNumber {
     operator fun invoke(

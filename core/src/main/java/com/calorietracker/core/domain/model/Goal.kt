@@ -1,4 +1,4 @@
-package com.calorietracker.core.domain.models
+package com.calorietracker.core.domain.model
 
 sealed class Goal(val name: String) {
     data object LoseWeight : Goal("lose_weight")

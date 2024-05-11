@@ -1,7 +1,7 @@
-package com.calorietracker.core.domain.use_cases
+package com.calorietracker.core.domain.use_case
 
 import com.calorietracker.core.R
-import com.calorietracker.core.domain.models.ValidationResult
+import com.calorietracker.core.domain.model.ValidationResult
 import com.calorietracker.core.utils.UiText
 
 class ValidateNumber {

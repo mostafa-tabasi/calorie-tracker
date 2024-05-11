@@ -1,7 +1,7 @@
 package com.calorietracker.onboarding.domain.use_cases
 
 import com.calorietracker.core.R
-import com.calorietracker.core.domain.models.ValidationResult
+import com.calorietracker.core.domain.model.ValidationResult
 import com.calorietracker.core.utils.UiText
 
 class ValidateNutrients {

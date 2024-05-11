@@ -20,7 +20,7 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.calorietracker.core.R
-import com.calorietracker.core.domain.models.Goal
+import com.calorietracker.core.domain.model.Goal
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 import com.calorietracker.core.ui.theme.LocalSpacing
 import com.calorietracker.core.utils.UiEvent

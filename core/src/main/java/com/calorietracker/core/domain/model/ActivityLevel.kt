@@ -1,4 +1,4 @@
-package com.calorietracker.core.domain.models
+package com.calorietracker.core.domain.model
 
 sealed class ActivityLevel(val name: String) {
     data object Low : ActivityLevel("low")

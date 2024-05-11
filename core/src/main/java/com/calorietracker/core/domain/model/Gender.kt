@@ -1,4 +1,4 @@
-package com.calorietracker.core.domain.models
+package com.calorietracker.core.domain.model
 
 sealed class Gender(val name: String) {
     data object Male : Gender("male")

@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.calorietracker.core.domain.models.ValidationResult
+import com.calorietracker.core.domain.model.ValidationResult
 import com.calorietracker.core.domain.prefrences.Preferences
-import com.calorietracker.core.domain.use_cases.FilterOutNumber
+import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.navigation.Route
 import com.calorietracker.onboarding.domain.use_cases.ValidateNutrients

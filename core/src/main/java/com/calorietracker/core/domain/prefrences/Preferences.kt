@@ -1,9 +1,9 @@
 package com.calorietracker.core.domain.prefrences
 
-import com.calorietracker.core.domain.models.ActivityLevel
-import com.calorietracker.core.domain.models.Gender
-import com.calorietracker.core.domain.models.Goal
-import com.calorietracker.core.domain.models.UserInfo
+import com.calorietracker.core.domain.model.ActivityLevel
+import com.calorietracker.core.domain.model.Gender
+import com.calorietracker.core.domain.model.Goal
+import com.calorietracker.core.domain.model.UserInfo
 
 interface Preferences {
     fun saveGender(gender: Gender)

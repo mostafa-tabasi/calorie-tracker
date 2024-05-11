@@ -1,7 +1,7 @@
 package com.calorietracker.core.di
 
-import com.calorietracker.core.domain.use_cases.FilterOutNumber
-import com.calorietracker.core.domain.use_cases.ValidateNumber
+import com.calorietracker.core.domain.use_case.FilterOutNumber
+import com.calorietracker.core.domain.use_case.ValidateNumber
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
