@@ -9,7 +9,6 @@ import com.calorietracker.tracker.domain.repository.TrackerRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,7 +44,7 @@ object TrackerSingletonModule {
 
     @Provides
     @Singleton
-    fun providesTrackerDatabase(@ApplicationContext app: Application): TrackerDatabase {
+    fun providesTrackerDatabase(app: Application): TrackerDatabase {
         return Room.databaseBuilder(
             app,
             TrackerDatabase::class.java,

@@ -2,6 +2,8 @@ package com.calorietracker.tracker.presentation.tracker_overview
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 import com.calorietracker.core.ui.theme.LocalSpacing
 import com.calorietracker.core.utils.UiEvent
+import com.calorietracker.tracker.presentation.tracker_overview.component.DaySelector
 import com.calorietracker.tracker.presentation.tracker_overview.component.NutrientsHeader
 
 @Composable
@@ -20,13 +23,17 @@ fun TrackerOverviewScreen(
 ) {
 
     TrackerOverviewLayout(
-        state = viewModel.state
+        state = viewModel.state,
+        onNextDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnNextDayClick) },
+        onPreviousDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnPreviousDayClick) },
     )
 }
 
 @Composable
 fun TrackerOverviewLayout(
     state: TrackerOverviewState,
+    onNextDayClick: () -> Unit,
+    onPreviousDayClick: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current
@@ -35,7 +42,14 @@ fun TrackerOverviewLayout(
         modifier = Modifier.fillMaxSize(),
     ) {
         NutrientsHeader(state = state)
-        // Day Changer
+        DaySelector(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(spacing.small),
+            date = state.date,
+            onPreviousDayClick = onPreviousDayClick,
+            onNextDayClick = onNextDayClick,
+        )
         LazyColumn(Modifier.weight(1f)) {
 
         }
@@ -57,6 +71,8 @@ private fun TrackerOverviewPreview() {
                 fatsGoal = 80,
                 caloriesGoal = 940,
             ),
+            onNextDayClick = {},
+            onPreviousDayClick = {},
         )
     }
 }
