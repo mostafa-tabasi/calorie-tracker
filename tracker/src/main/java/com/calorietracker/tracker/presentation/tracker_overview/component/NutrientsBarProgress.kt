@@ -19,7 +19,7 @@ import com.calorietracker.core.ui.theme.FatColor
 import com.calorietracker.core.ui.theme.ProteinColor
 
 @Composable
-fun NutrientsBar(
+fun NutrientsBarProgress(
     modifier: Modifier = Modifier,
     carbs: Int,
     protein: Int,
@@ -30,11 +30,11 @@ fun NutrientsBar(
     val radiusValue = 100f
 
     if (calories > calorieGoal) {
-        val caloriesExceedColor = MaterialTheme.colors.error
+        val caloriesExceededColor = MaterialTheme.colors.error
 
         Canvas(modifier = modifier) {
             drawRoundRect(
-                color = caloriesExceedColor,
+                color = caloriesExceededColor,
                 size = size,
                 cornerRadius = CornerRadius(radiusValue)
             )
@@ -101,7 +101,7 @@ fun NutrientsBar(
 @Composable
 private fun NutrientsBarPreview() {
     CalorieTrackerTheme {
-        NutrientsBar(
+        NutrientsBarProgress(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
