@@ -1,13 +1,13 @@
 package com.calorietracker.tracker.presentation.tracker_overview.component
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 import com.calorietracker.core.ui.theme.CarbColor
 import com.calorietracker.core.ui.theme.LocalSpacing
@@ -32,9 +34,12 @@ import com.calorietracker.tracker.presentation.component.UnitDisplay
 fun NutrientCircleProgress(
     modifier: Modifier = Modifier,
     value: Int,
+    valueSize: TextUnit = 17.sp,
     goal: Int,
     name: String,
+    nameSize: TextUnit = 17.sp,
     unit: String,
+    unitSize: TextUnit = 14.sp,
     color: Color,
     strokeWidth: Dp = LocalSpacing.current.small,
 ) {
@@ -42,18 +47,21 @@ fun NutrientCircleProgress(
 
     Box(
         modifier = modifier
-            .fillMaxWidth()
             .aspectRatio(1f)
             .padding(strokeWidth / 2),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(LocalSpacing.current.small),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             UnitDisplay(
                 amount = value,
+                amountTextSize = valueSize,
                 unit = unit,
+                unitTextSize = unitSize,
                 textColor = if (value > goal) valueExceededColor
                 else MaterialTheme.colors.onPrimary,
             )
@@ -61,7 +69,7 @@ fun NutrientCircleProgress(
                 text = name,
                 color = if (value > goal) valueExceededColor
                 else MaterialTheme.colors.onPrimary,
-                style = MaterialTheme.typography.body1,
+                fontSize = nameSize,
                 fontWeight = FontWeight.Light,
             )
         }
@@ -80,7 +88,8 @@ fun NutrientCircleProgress(
             val progressAmount = remember { Animatable(0f) }
             LaunchedEffect(key1 = value) {
                 progressAmount.animateTo(
-                    if (goal > 0) value / goal.toFloat() else 0f
+                    targetValue = if (goal > 0) value / goal.toFloat() else 0f,
+                    animationSpec = tween(durationMillis = 300),
                 )
             }
 
