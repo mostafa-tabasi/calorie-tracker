@@ -139,7 +139,8 @@ fun NutrientsHeader(
 private fun NutrientsHeaderPreview() {
     CalorieTrackerTheme {
         NutrientsHeader(
-            modifier = Modifier, TrackerOverviewState(
+            modifier = Modifier,
+            state = TrackerOverviewState(
                 totalCarbs = 50,
                 totalProteins = 70,
                 totalFats = 35,
@@ -148,7 +149,7 @@ private fun NutrientsHeaderPreview() {
                 proteinsGoal = 60,
                 fatsGoal = 80,
                 caloriesGoal = 940,
-            )
+            ),
         )
     }
 }

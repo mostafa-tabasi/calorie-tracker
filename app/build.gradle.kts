@@ -54,6 +54,7 @@ android {
 dependencies {
     implementation(projects.core)
     implementation(projects.onboarding)
+    implementation(projects.tracker)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
