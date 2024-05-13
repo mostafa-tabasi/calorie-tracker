@@ -3,43 +3,33 @@ package com.calorietracker.tracker.presentation.tracker_overview.component
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 import com.calorietracker.core.ui.theme.CarbColor
 import com.calorietracker.core.ui.theme.LocalSpacing
-import com.calorietracker.tracker.presentation.component.UnitDisplay
+import com.calorietracker.tracker.presentation.component.NutrientInfo
 
 @Composable
 fun NutrientCircleProgress(
     modifier: Modifier = Modifier,
     value: Int,
-    valueSize: TextUnit = 17.sp,
     goal: Int,
     name: String,
-    nameSize: TextUnit = 17.sp,
     unit: String,
-    unitSize: TextUnit = 14.sp,
     color: Color,
     strokeWidth: Dp = LocalSpacing.current.small,
 ) {
@@ -50,29 +40,16 @@ fun NutrientCircleProgress(
             .aspectRatio(1f)
             .padding(strokeWidth / 2),
     ) {
-        Column(
+        NutrientInfo(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(LocalSpacing.current.small),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            UnitDisplay(
-                amount = value,
-                amountTextSize = valueSize,
-                unit = unit,
-                unitTextSize = unitSize,
-                textColor = if (value > goal) valueExceededColor
-                else MaterialTheme.colors.onPrimary,
-            )
-            Text(
-                text = name,
-                color = if (value > goal) valueExceededColor
-                else MaterialTheme.colors.onPrimary,
-                fontSize = nameSize,
-                fontWeight = FontWeight.Light,
-            )
-        }
+            name = name,
+            amount = value,
+            unit = unit,
+            textColor = if (value > goal) valueExceededColor
+            else MaterialTheme.colors.onPrimary,
+        )
 
         if (value > goal) {
             Canvas(modifier = Modifier.fillMaxSize()) {
