@@ -18,9 +18,11 @@ import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 fun NutrientInfo(
     modifier: Modifier = Modifier,
     name: String,
-    nameSize: TextUnit = 17.sp,
+    nameTextSize: TextUnit = 17.sp,
     amount: Int,
+    amountTextSize: TextUnit = 17.sp,
     unit: String,
+    unitTextSize: TextUnit = 13.sp,
     textColor: Color = MaterialTheme.colors.onBackground,
 ) {
     Column(
@@ -30,13 +32,15 @@ fun NutrientInfo(
     ) {
         UnitDisplay(
             amount = amount,
+            amountTextSize = amountTextSize,
             unit = unit,
+            unitTextSize = unitTextSize,
             textColor = textColor,
         )
         Text(
             text = name,
             color = textColor,
-            fontSize = nameSize,
+            fontSize = nameTextSize,
             fontWeight = FontWeight.Light,
         )
     }

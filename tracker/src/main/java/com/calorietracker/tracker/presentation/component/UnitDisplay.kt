@@ -21,8 +21,8 @@ import com.calorietracker.core.ui.theme.LocalSpacing
 fun UnitDisplay(
     modifier: Modifier = Modifier,
     amount: Int,
-    unit: String,
     amountTextSize: TextUnit = 17.sp,
+    unit: String,
     unitTextSize: TextUnit = 13.sp,
     textColor: Color = MaterialTheme.colors.onBackground,
 ) {
