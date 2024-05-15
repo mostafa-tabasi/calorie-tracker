@@ -58,13 +58,6 @@ fun AddButton(
     }
 }
 
-/*
-stringResource(
-    id = R.string.add_meal,
-    meal.name.replaceFirstChar { it.titlecase(Locale.ROOT) },
-)
-*/
-
 @Preview
 @Composable
 private fun AddFoodButtonPreview() {

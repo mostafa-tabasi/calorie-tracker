@@ -10,8 +10,10 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +22,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -55,87 +59,95 @@ fun ExpandableMeal(
     val context = LocalContext.current
     val spacing = LocalSpacing.current
 
-    Column(
+    Card(
         modifier = modifier
-            .padding(spacing.small),
+            .padding(spacing.extraSmall),
+        shape = RoundedCornerShape(spacing.small),
+        elevation = spacing.extraSmall,
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(
-                painter = painterResource(meal.drawableRes),
-                contentDescription = meal.name.asString(context),
-                modifier = Modifier.weight(1f),
-            )
-            Column(
-                modifier = Modifier
-                    .weight(2.5f)
-                    .padding(start = spacing.small),
+        Column {
+            Row(
+                modifier = Modifier.padding(spacing.small),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                Image(
+                    painter = painterResource(meal.drawableRes),
+                    contentDescription = meal.name.asString(context),
+                    modifier = Modifier.weight(1f),
+                )
+                Column(
+                    modifier = Modifier
+                        .weight(2.5f)
+                        .padding(start = spacing.small),
                 ) {
-                    Text(
-                        text = meal.name.asString(context),
-                        color = MaterialTheme.colors.onBackground,
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .clip(shape = RoundedCornerShape(100))
-                            .clickable { onToggleClick() }
-                            .padding(spacing.extraSmall),
-                        imageVector = if (meal.isExpanded) Icons.Default.KeyboardArrowUp
-                        else Icons.Default.KeyboardArrowDown,
-                        contentDescription = if (meal.isExpanded) stringResource(id = R.string.collapse)
-                        else stringResource(id = R.string.extend),
-                    )
-                }
-                Spacer(modifier = Modifier.height(spacing.small))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    UnitDisplay(
-                        modifier = Modifier.weight(1f),
-                        amount = meal.calories,
-                        amountTextSize = 24.sp,
-                        unit = stringResource(id = R.string.kcal),
-                    )
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    NutrientInfo(
-                        name = stringResource(id = R.string.carbs),
-                        nameTextSize = 12.sp,
-                        amount = meal.carbs,
-                        unit = stringResource(id = R.string.grams),
-                    )
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    NutrientInfo(
-                        name = stringResource(id = R.string.protein),
-                        nameTextSize = 12.sp,
-                        amount = meal.proteins,
-                        unit = stringResource(id = R.string.grams),
-                    )
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    NutrientInfo(
-                        name = stringResource(id = R.string.fat),
-                        nameTextSize = 12.sp,
-                        amount = meal.fats,
-                        unit = stringResource(id = R.string.grams),
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        Text(
+                            text = meal.name.asString(context),
+                            color = MaterialTheme.colors.onBackground,
+                        )
+                        Icon(
+                            modifier = Modifier
+                                .clip(shape = RoundedCornerShape(100))
+                                .clickable { onToggleClick() }
+                                .padding(spacing.extraSmall),
+                            imageVector = if (meal.isExpanded) Icons.Default.KeyboardArrowUp
+                            else Icons.Default.KeyboardArrowDown,
+                            contentDescription = if (meal.isExpanded) stringResource(id = R.string.collapse)
+                            else stringResource(id = R.string.extend),
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(spacing.small))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        UnitDisplay(
+                            modifier = Modifier.weight(1f),
+                            amount = meal.calories,
+                            amountTextSize = 24.sp,
+                            unit = stringResource(id = R.string.kcal),
+                        )
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        NutrientInfo(
+                            name = stringResource(id = R.string.carbs),
+                            nameTextSize = 12.sp,
+                            amount = meal.carbs,
+                            unit = stringResource(id = R.string.grams),
+                        )
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        NutrientInfo(
+                            name = stringResource(id = R.string.protein),
+                            nameTextSize = 12.sp,
+                            amount = meal.proteins,
+                            unit = stringResource(id = R.string.grams),
+                        )
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        NutrientInfo(
+                            name = stringResource(id = R.string.fat),
+                            nameTextSize = 12.sp,
+                            amount = meal.fats,
+                            unit = stringResource(id = R.string.grams),
+                        )
+                    }
                 }
             }
-        }
-        AnimatedVisibility(
-            visible = meal.isExpanded,
-            enter = slideInVertically()
-                    + expandVertically(expandFrom = Alignment.Top)
-                    + fadeIn(initialAlpha = 0.3f),
-            exit = slideOutVertically()
-                    + shrinkVertically()
-                    + fadeOut(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
-        ) {
-            content()
+            AnimatedVisibility(
+                visible = meal.isExpanded,
+                enter = slideInVertically()
+                        + expandVertically(expandFrom = Alignment.Top)
+                        + fadeIn(initialAlpha = 0.3f),
+                exit = slideOutVertically()
+                        + shrinkVertically()
+                        + fadeOut(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
+            ) {
+                Column {
+                    Divider()
+                    content()
+                }
+            }
         }
     }
 }
@@ -153,15 +165,21 @@ private fun ExpandableMealPreview() {
                 proteins = 119,
                 fats = 21,
                 calories = 372,
-                isExpanded = false,
+                isExpanded = true,
             ),
             onToggleClick = {}) {
-            Text(
-                text = "HELLO WORLD",
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            )
+                    .padding(horizontal = 16.dp)
+                    .background(color = MaterialTheme.colors.background)
+            ) {
+                Text(
+                    text = "HELLO WORLD",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                )
+            }
         }
     }
 }
