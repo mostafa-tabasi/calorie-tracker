@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                             SearchScreen(
                                 scaffoldState = scaffoldState,
                                 onNavigateUp = navController::navigateUp,
-                                mealTypeName = args.mealTypeName,
+                                mealName = args.mealName,
                                 dayOfMonth = args.dayOfMonth,
                                 month = args.month,
                                 year = args.year,

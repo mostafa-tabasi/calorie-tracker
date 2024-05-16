@@ -32,7 +32,7 @@ sealed class Route {
 
     @Serializable
     data class Search(
-        val mealTypeName: String,
+        val mealName: String,
         val dayOfMonth: Int,
         val month: Int,
         val year: Int,
