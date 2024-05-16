@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.calorietracker.core.domain.model.ValidationResult
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.domain.use_case.FilterOutNumber
-import com.calorietracker.core.domain.use_case.ValidateNumber
+import com.calorietracker.core.domain.use_case.ValidateAge
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class AgeViewModel @Inject constructor(
     private var preferences: Preferences,
     private var filterOutNumber: FilterOutNumber,
-    private var validateNumber: ValidateNumber,
+    private var validateAge: ValidateAge,
 ) : ViewModel() {
 
     var age by mutableStateOf("0")
@@ -39,7 +39,7 @@ class AgeViewModel @Inject constructor(
 
     fun onNextClick() {
         viewModelScope.launch {
-            validateNumber.isAgeValid(age).run {
+            validateAge(age).run {
                 when (this) {
                     is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))
                     is ValidationResult.Success -> {
