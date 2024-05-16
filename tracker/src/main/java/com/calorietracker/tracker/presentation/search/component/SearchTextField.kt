@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,7 @@ fun SearchTextField(
     onSearchClick: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     TextField(
         modifier = modifier
@@ -60,6 +62,7 @@ fun SearchTextField(
         keyboardActions = KeyboardActions(
             onSearch = {
                 onSearchClick()
+                keyboardController?.hide()
                 defaultKeyboardAction(ImeAction.Search)
             }
         ),
@@ -67,7 +70,13 @@ fun SearchTextField(
             imeAction = ImeAction.Search
         ),
         trailingIcon = {
-            IconButton(onClick = onSearchClick, Modifier.padding(horizontal = spacing.extraSmall)) {
+            IconButton(
+                onClick = {
+                    onSearchClick()
+                    keyboardController?.hide()
+                },
+                modifier = Modifier.padding(horizontal = spacing.extraSmall),
+            ) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = stringResource(id = R.string.search),
