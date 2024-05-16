@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +37,15 @@ fun TrackerOverviewScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
     viewModel: TrackerOverviewViewModel = hiltViewModel()
 ) {
+
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect {
+            when (it) {
+                is UiEvent.Navigate -> onNavigate(it)
+                else -> Unit
+            }
+        }
+    }
 
     TrackerOverviewLayout(
         state = viewModel.state,

@@ -54,7 +54,7 @@ class NutrientGoalViewModel @Inject constructor(
                             preferences.saveCarbRatio(result.data.carbsRatio)
                             preferences.saveProteinRatio(result.data.proteinsRatio)
                             preferences.saveFatRatio(result.data.fatsRatio)
-                            _uiEvent.send(UiEvent.Navigate(Route.TRACKER_OVERVIEW))
+                            _uiEvent.send(UiEvent.Navigate(Route.TrackerOverview))
                         }
                     }
                 }

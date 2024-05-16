@@ -44,7 +44,7 @@ class AgeViewModel @Inject constructor(
                     is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))
                     is ValidationResult.Success -> {
                         preferences.saveAge(data)
-                        _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
+                        _uiEvent.send(UiEvent.Navigate(Route.Height))
                     }
                 }
             }

@@ -44,7 +44,7 @@ class HeightViewModel @Inject constructor(
                     is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))
                     is ValidationResult.Success -> {
                         preferences.saveHeight(data)
-                        _uiEvent.send(UiEvent.Navigate(Route.WEIGHT))
+                        _uiEvent.send(UiEvent.Navigate(Route.Weight))
                     }
                 }
             }

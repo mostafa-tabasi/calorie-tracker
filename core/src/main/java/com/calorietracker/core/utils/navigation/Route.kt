@@ -1,15 +1,40 @@
 package com.calorietracker.core.utils.navigation
 
-object Route {
-    const val WELCOME = "welcome"
-    const val AGE = "age"
-    const val GENDER = "gender"
-    const val HEIGHT = "height"
-    const val WEIGHT = "weight"
-    const val NUTRIENT_GOAL = "nutrient_goal"
-    const val ACTIVITY = "activity"
-    const val GOAL = "goal"
+import kotlinx.serialization.Serializable
 
-    const val TRACKER_OVERVIEW = "tracker_overview"
-    const val SEARCH = "search"
+sealed class Route {
+    @Serializable
+    data object Welcome : Route()
+
+    @Serializable
+    data object Age : Route()
+
+    @Serializable
+    data object Gender : Route()
+
+    @Serializable
+    data object Height : Route()
+
+    @Serializable
+    data object Weight : Route()
+
+    @Serializable
+    data object NutrientGoal : Route()
+
+    @Serializable
+    data object Activity : Route()
+
+    @Serializable
+    data object Goal : Route()
+
+    @Serializable
+    data object TrackerOverview : Route()
+
+    @Serializable
+    data class Search(
+        val mealTypeName: String,
+        val dayOfMonth: Int,
+        val month: Int,
+        val year: Int,
+    ) : Route()
 }

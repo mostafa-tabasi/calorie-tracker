@@ -76,7 +76,7 @@ private fun NutrientGoalScreenLayout(
     ) {
         DescriptionText(
             id = "questionText",
-            description = stringResource(R.string.whats_your_age),
+            description = stringResource(R.string.what_are_your_nutrient_goals),
         )
         NutrientsTextField(
             id = "carbsTextField",

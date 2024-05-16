@@ -45,7 +45,7 @@ class WeightViewModel @Inject constructor(
                     is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))
                     is ValidationResult.Success -> {
                         preferences.saveWeight(data)
-                        _uiEvent.send(UiEvent.Navigate(Route.ACTIVITY))
+                        _uiEvent.send(UiEvent.Navigate(Route.Activity))
                     }
                 }
             }

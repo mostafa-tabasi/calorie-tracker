@@ -9,12 +9,12 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.7.0"
+lifecycleRuntimeKtx = "2.8.0"
 activityCompose = "1.9.0"
 composeBom = "2024.05.00"
-composeCompiler = "1.5.3"
-jetbrainsKotlinJvm = "1.9.0"
-navigation = "2.7.7"
+composeCompiler = "1.5.14"
+jetbrainsKotlin = "1.9.24"
+navigation = "2.8.0-beta01"
 hilt = "2.49"
 hiltNavigation = "1.2.0"
 constraint = "1.0.1"
@@ -24,6 +24,7 @@ loggingInterceptor = "5.0.0-alpha.3"
 room = "2.6.1"
 ksp = "1.9.10-1.0.13"
 coil = "2.6.0"
+serialization = "1.6.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,12 +55,14 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 googleDaggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 googleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "jetbrainsKotlin" }
 
