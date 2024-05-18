@@ -30,7 +30,20 @@ class TrackerRepositoryImpl @Inject constructor(
                 pageSize,
             )
             if (response.isSuccessful) Result.success(
-                response.body()?.products?.mapNotNull { it.toTrackableFood() }
+                response.body()
+                    ?.products
+                    ?.filter {
+                        val calculatedCalories =
+                            (it.nutriments.carbohydrates100g * 4f) +
+                                    (it.nutriments.proteins100g * 4f) +
+                                    (it.nutriments.fat100g * 9f)
+                        val lowerBound = calculatedCalories * 0.99f
+                        val upperBound = calculatedCalories * 1.01f
+
+                        it.nutriments.energyKcal100g > 0.0
+                                && it.nutriments.energyKcal100g in (lowerBound..upperBound)
+                    }
+                    ?.mapNotNull { it.toTrackableFood() }
                     ?: arrayListOf()
             )
             else Result.failure(Exception(response.message()))
