@@ -1,6 +1,6 @@
 # Calorie Tracker
 
-This is a simple Android application demonstrating a multi-module project with clean architecture. The app follows MVVM design pattern and leverages various modern Android libraries and tools.
+This is a simple Android application demonstrating a multi-module project with clean architecture. The app follows MVI design pattern and leverages various modern Android libraries and tools.
 
 - ## Features
 - **MVVM Pattern**: Separation of concerns with ViewModels managing the UI-related data.
