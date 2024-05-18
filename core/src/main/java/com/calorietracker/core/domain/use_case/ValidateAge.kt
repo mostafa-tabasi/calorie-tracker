@@ -9,8 +9,12 @@ class ValidateAge {
         val ageNumber = age.toIntOrNull() ?: run {
             return ValidationResult.Error(UiText.StringResource(R.string.error_age_cant_be_empty))
         }
+
         if (ageNumber == 0)
             return ValidationResult.Error(UiText.StringResource(R.string.error_age_cant_be_zero))
+
+        if (ageNumber < 0)
+            return ValidationResult.Error(UiText.StringResource(R.string.error_age_cant_be_less_than_zero))
 
         return ValidationResult.Success(ageNumber)
     }
