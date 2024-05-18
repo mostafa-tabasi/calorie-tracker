@@ -14,14 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.calorietracker.core.R
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 import com.calorietracker.core.ui.theme.LocalSpacing
-import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.navigation.Route
 import com.calorietracker.onboarding.presentation.components.ActionButton
 import com.calorietracker.onboarding.presentation.components.DescriptionText
 
 @Composable
 fun WelcomeScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNext: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
     Column(
@@ -35,7 +33,7 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.height(spacing.medium))
         ActionButton(
             text = stringResource(id = R.string.next),
-            onClick = { onNavigate(UiEvent.Navigate(Route.Gender)) },
+            onClick = onNext,
             isEnabled = true,
         )
     }
@@ -45,6 +43,6 @@ fun WelcomeScreen(
 @Composable
 private fun WelcomeScreenPreview() {
     CalorieTrackerTheme {
-        WelcomeScreen(onNavigate = {})
+        WelcomeScreen(onNext = {})
     }
 }

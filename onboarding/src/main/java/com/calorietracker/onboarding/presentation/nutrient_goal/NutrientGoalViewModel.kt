@@ -9,7 +9,6 @@ import com.calorietracker.core.domain.model.ValidationResult
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.navigation.Route
 import com.calorietracker.onboarding.domain.use_cases.ValidateNutrients
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -54,7 +53,7 @@ class NutrientGoalViewModel @Inject constructor(
                             preferences.saveCarbRatio(result.data.carbsRatio)
                             preferences.saveProteinRatio(result.data.proteinsRatio)
                             preferences.saveFatRatio(result.data.fatsRatio)
-                            _uiEvent.send(UiEvent.Navigate(Route.TrackerOverview))
+                            _uiEvent.send(UiEvent.NavigateToNextScreen)
                         }
                     }
                 }

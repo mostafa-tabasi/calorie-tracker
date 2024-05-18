@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,7 +20,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.calorietracker.core.R
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
 import com.calorietracker.core.ui.theme.LocalSpacing
-import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.tracker.domain.model.MealType
 import com.calorietracker.tracker.domain.model.TrackedFood
 import com.calorietracker.tracker.presentation.tracker_overview.component.AddButton
@@ -34,19 +32,9 @@ import java.util.Locale
 
 @Composable
 fun TrackerOverviewScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNavigateToSearch: (mealName: String, dayOfMonth: Int, month: Int, year: Int) -> Unit,
     viewModel: TrackerOverviewViewModel = hiltViewModel()
 ) {
-
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvent.collect {
-            when (it) {
-                is UiEvent.Navigate -> onNavigate(it)
-                else -> Unit
-            }
-        }
-    }
-
     TrackerOverviewLayout(
         state = viewModel.state,
         onNextDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnNextDayClick) },
@@ -55,7 +43,14 @@ fun TrackerOverviewScreen(
         onTrackedFoodDeleteClick = {
             viewModel.onEvent(TrackerOverviewEvent.OnDeleteTrackedFoodClick(it))
         },
-        onAddFoodClick = { viewModel.onEvent(TrackerOverviewEvent.OnAddFoodClick(it)) },
+        onAddFoodClick = { mealName, dayOfMonth, month, year ->
+            onNavigateToSearch(
+                mealName,
+                dayOfMonth,
+                month,
+                year,
+            )
+        },
     )
 }
 
@@ -66,7 +61,7 @@ fun TrackerOverviewLayout(
     onPreviousDayClick: () -> Unit,
     onMealToggleClick: (Meal) -> Unit,
     onTrackedFoodDeleteClick: (TrackedFood) -> Unit,
-    onAddFoodClick: (Meal) -> Unit,
+    onAddFoodClick: (mealName: String, dayOfMonth: Int, month: Int, year: Int) -> Unit,
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current
@@ -136,7 +131,14 @@ fun TrackerOverviewLayout(
                                     meal.name.asString(context)
                                         .replaceFirstChar { it.titlecase(Locale.ROOT) },
                                 ),
-                                onClick = { onAddFoodClick(meal) },
+                                onClick = {
+                                    onAddFoodClick(
+                                        meal.mealType.name,
+                                        state.date.dayOfMonth,
+                                        state.date.monthValue,
+                                        state.date.year,
+                                    )
+                                },
                             )
                         }
                     }
@@ -196,7 +198,7 @@ private fun TrackerOverviewPreview() {
             onPreviousDayClick = {},
             onMealToggleClick = {},
             onTrackedFoodDeleteClick = {},
-            onAddFoodClick = {},
+            onAddFoodClick = { _, _, _, _ -> },
         )
     }
 }

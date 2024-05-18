@@ -10,7 +10,6 @@ import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.domain.use_case.ValidateAge
 import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -44,7 +43,7 @@ class AgeViewModel @Inject constructor(
                     is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))
                     is ValidationResult.Success -> {
                         preferences.saveAge(data)
-                        _uiEvent.send(UiEvent.Navigate(Route.Height))
+                        _uiEvent.send(UiEvent.NavigateToNextScreen)
                     }
                 }
             }

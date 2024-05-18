@@ -1,4 +1,4 @@
-package com.calorietracker.core.utils.navigation
+package com.calorietracker.android.navigation
 
 import kotlinx.serialization.Serializable
 

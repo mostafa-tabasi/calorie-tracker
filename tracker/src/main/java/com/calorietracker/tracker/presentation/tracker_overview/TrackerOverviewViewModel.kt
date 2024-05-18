@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.navigation.Route
-import com.calorietracker.tracker.domain.model.MealType
 import com.calorietracker.tracker.domain.use_case.TrackerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -40,9 +38,6 @@ class TrackerOverviewViewModel @Inject constructor(
 
     fun onEvent(event: TrackerOverviewEvent) {
         when (event) {
-            is TrackerOverviewEvent.OnAddFoodClick ->
-                redirectToSearchFoodScreen(event.meal.mealType)
-
             is TrackerOverviewEvent.OnDeleteTrackedFoodClick ->
                 viewModelScope.launch {
                     trackerUseCases.deleteTrackedFood(event.trackedFood)
@@ -61,21 +56,6 @@ class TrackerOverviewViewModel @Inject constructor(
 
             is TrackerOverviewEvent.OnToggleMealClick ->
                 toggleMeal(event.meal)
-        }
-    }
-
-    private fun redirectToSearchFoodScreen(mealType: MealType) {
-        viewModelScope.launch {
-            _uiEvent.send(
-                UiEvent.Navigate(
-                    route = Route.Search(
-                        mealName = mealType.name,
-                        dayOfMonth = state.date.dayOfMonth,
-                        month = state.date.monthValue,
-                        year = state.date.year,
-                    ),
-                )
-            )
         }
     }
 

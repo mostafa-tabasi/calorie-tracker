@@ -30,13 +30,13 @@ import com.calorietracker.onboarding.presentation.components.SelectableButton
 
 @Composable
 fun GenderScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNext: () -> Unit,
     viewModel: GenderViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect {
             when (it) {
-                is UiEvent.Navigate -> onNavigate(it)
+                is UiEvent.NavigateToNextScreen -> onNext()
                 else -> Unit
             }
         }

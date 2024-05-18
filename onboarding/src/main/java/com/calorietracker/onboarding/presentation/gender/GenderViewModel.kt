@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.calorietracker.core.domain.model.Gender
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -32,7 +31,7 @@ class GenderViewModel @Inject constructor(
     fun onNextClick() {
         viewModelScope.launch {
             preferences.saveGender(selectedGender)
-            _uiEvent.send(UiEvent.Navigate(Route.Age))
+            _uiEvent.send(UiEvent.NavigateToNextScreen)
         }
     }
 }

@@ -30,13 +30,13 @@ import com.calorietracker.onboarding.presentation.components.SelectableButton
 
 @Composable
 fun ActivityLevelScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNext: () -> Unit,
     viewModel: ActivityLevelViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect {
             when (it) {
-                is UiEvent.Navigate -> onNavigate(it)
+                is UiEvent.NavigateToNextScreen -> onNext()
                 else -> Unit
             }
         }

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.calorietracker.core.domain.model.ActivityLevel
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.utils.UiEvent
-import com.calorietracker.core.utils.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -32,7 +31,7 @@ class ActivityLevelViewModel @Inject constructor(
     fun onNextClick() {
         viewModelScope.launch {
             preferences.saveActivityLevel(selectedLevel)
-            _uiEvent.send(UiEvent.Navigate(Route.Goal))
+            _uiEvent.send(UiEvent.NavigateToNextScreen)
         }
     }
 }

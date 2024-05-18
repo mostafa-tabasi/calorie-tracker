@@ -12,9 +12,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.calorietracker.android.navigation.Route
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
-import com.calorietracker.core.utils.navigation.Route
 import com.calorietracker.onboarding.presentation.activity_level.ActivityLevelScreen
 import com.calorietracker.onboarding.presentation.age.AgeScreen
 import com.calorietracker.onboarding.presentation.gender.GenderScreen
@@ -53,43 +53,53 @@ class MainActivity : ComponentActivity() {
                         else Route.TrackerOverview,
                     ) {
                         composable<Route.Welcome> {
-                            WelcomeScreen(onNavigate = { navController.navigate(it.route) })
+                            WelcomeScreen(onNext = { navController.navigate(Route.Gender) })
                         }
                         composable<Route.Gender> {
-                            GenderScreen(onNavigate = { navController.navigate(it.route) })
+                            GenderScreen(onNext = { navController.navigate(Route.Age) })
                         }
                         composable<Route.Age> {
                             AgeScreen(
                                 scaffoldState = scaffoldState,
-                                onNavigate = { navController.navigate(it.route) },
+                                onNext = { navController.navigate(Route.Height) },
                             )
                         }
                         composable<Route.Height> {
                             HeightScreen(
                                 scaffoldState = scaffoldState,
-                                onNavigate = { navController.navigate(it.route) },
+                                onNext = { navController.navigate(Route.Weight) },
                             )
                         }
                         composable<Route.Weight> {
                             WeightScreen(
                                 scaffoldState = scaffoldState,
-                                onNavigate = { navController.navigate(it.route) },
+                                onNext = { navController.navigate(Route.Activity) },
                             )
                         }
                         composable<Route.Activity> {
-                            ActivityLevelScreen(onNavigate = { navController.navigate(it.route) })
+                            ActivityLevelScreen(onNext = { navController.navigate(Route.Goal) })
                         }
                         composable<Route.Goal> {
-                            GoalScreen(onNavigate = { navController.navigate(it.route) })
+                            GoalScreen(onNext = { navController.navigate(Route.NutrientGoal) })
                         }
                         composable<Route.NutrientGoal> {
                             NutrientGoalScreen(
                                 scaffoldState = scaffoldState,
-                                onNavigate = { navController.navigate(it.route) },
+                                onNext = { navController.navigate(Route.TrackerOverview) },
                             )
                         }
                         composable<Route.TrackerOverview> {
-                            TrackerOverviewScreen(onNavigate = { navController.navigate(it.route) })
+                            TrackerOverviewScreen(
+                                onNavigateToSearch = { mealType, dayOfMonth, month, year ->
+                                    navController.navigate(
+                                        Route.Search(
+                                            mealName = mealType,
+                                            dayOfMonth = dayOfMonth,
+                                            month = month,
+                                            year = year,
+                                        )
+                                    )
+                                })
                         }
                         composable<Route.Search> {
                             val args = it.toRoute<Route.Search>()

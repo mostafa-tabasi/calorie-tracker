@@ -26,7 +26,7 @@ import com.calorietracker.onboarding.presentation.components.UnitTextField
 @Composable
 fun NutrientGoalScreen(
     scaffoldState: ScaffoldState,
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNext: () -> Unit,
     viewModel: NutrientGoalViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -34,7 +34,7 @@ fun NutrientGoalScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect {
             when (it) {
-                is UiEvent.Navigate -> onNavigate(it)
+                is UiEvent.NavigateToNextScreen -> onNext()
                 is UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = it.message.asString(context),
