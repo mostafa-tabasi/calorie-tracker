@@ -3,7 +3,7 @@
 This is a simple Android application demonstrating a multi-module project with clean architecture. The app follows MVI design pattern and leverages various modern Android libraries and tools.
 
 - ## Features
-- **MVVM Pattern**: Separation of concerns with ViewModels managing the UI-related data.
+- **MVI Pattern**: Separation of concerns with ViewModels managing the UI-related data.
 - **[Jetpack Compose](https://developer.android.com/jetpack/compose)**: Modern toolkit for building native UI.
 - **[Dagger Hilt](https://dagger.dev/hilt/)**: Simplified dependency injection.
 - **[Jetpack Navigation](https://developer.android.com/guide/navigation)**: Declarative navigation in Compose.
