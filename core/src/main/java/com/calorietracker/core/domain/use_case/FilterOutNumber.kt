@@ -4,12 +4,12 @@ class FilterOutNumber {
     operator fun invoke(
         value: String,
         maxLength: Int,
-        isDecimal: Boolean = false,
+        canBeDecimal: Boolean = false,
         canBeZero: Boolean = false,
     ): String {
         if (value.isEmpty()) return ""
 
-        if (!isDecimal) value.filter { it.isDigit() }.also {
+        if (!canBeDecimal) value.filter { it.isDigit() }.also {
             val trimmed = if (!canBeZero) it.trimStart('0') else it
             return trimmed.take(maxLength)
         }
