@@ -10,7 +10,7 @@ class ValidateWeight {
             return ValidationResult.Error(UiText.StringResource(R.string.error_weight_cant_be_empty))
         }
 
-        if (weightNumber == 0f)
+        if (weightNumber <= 0f)
             return ValidationResult.Error(UiText.StringResource(R.string.error_weight_cant_be_zero))
 
         return ValidationResult.Success(weightNumber)

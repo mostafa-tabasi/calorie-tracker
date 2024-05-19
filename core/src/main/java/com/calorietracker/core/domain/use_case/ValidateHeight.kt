@@ -9,7 +9,8 @@ class ValidateHeight {
         val heightNumber = height.toIntOrNull() ?: run {
             return ValidationResult.Error(UiText.StringResource(R.string.error_height_cant_be_empty))
         }
-        if (heightNumber == 0)
+
+        if (heightNumber <= 0)
             return ValidationResult.Error(UiText.StringResource(R.string.error_height_cant_be_zero))
 
         return ValidationResult.Success(heightNumber)

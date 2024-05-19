@@ -15,7 +15,15 @@ class ValidateAgeTest {
     }
 
     @Test
-    fun `invalid age value, expected error`() {
+    fun `empty age value, expect error`() {
+        val emptyAge = ""
+        val result = validateAge(emptyAge)
+
+        assertThat(result).isInstanceOf(ValidationResult.Error::class.java)
+    }
+
+    @Test
+    fun `invalid age value, expect error`() {
         val invalidAge = "abc"
         val result = validateAge(invalidAge)
 
@@ -23,7 +31,7 @@ class ValidateAgeTest {
     }
 
     @Test
-    fun `zero year old, expected error`() {
+    fun `zero year old, expect error`() {
         val zeroYearOld = "0"
         val zeroYearOldButDecimal = "0.0"
 
@@ -35,17 +43,23 @@ class ValidateAgeTest {
     }
 
     @Test
-    fun `minus year old, expected error`() {
+    fun `minus year old, expect error`() {
         val minusYearOld = "-7"
         val result = validateAge(minusYearOld)
         assertThat(result).isInstanceOf(ValidationResult.Error::class.java)
     }
 
     @Test
-    fun `valid year value, expected success`() {
+    fun `valid year value but with space, expect error`() {
+        val validYearOld = " 17 "
+        val result = validateAge(validYearOld)
+        assertThat(result).isInstanceOf(ValidationResult.Error::class.java)
+    }
+
+    @Test
+    fun `valid year value, expect success`() {
         val validYearOld = "17"
         val result = validateAge(validYearOld)
         assertThat(result).isInstanceOf(ValidationResult.Success::class.java)
     }
-
 }
