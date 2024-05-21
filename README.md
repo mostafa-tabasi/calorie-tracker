@@ -10,6 +10,9 @@ This is a simple Android application demonstrating a multi-module project with c
 - **[Room](https://developer.android.com/jetpack/androidx/releases/room)**: Local database for offline storage.
 - **[Retrofit](https://square.github.io/retrofit/)**: HTTP client for network requests.
 - **[Coil](https://coil-kt.github.io/coil/)**: Image loading library.
+- **JUnit**: Framework for writing and running tests.
+- **[Truth](https://truth.dev/)**: Assertion library for unit tests.
+- **[MockK](https://mockk.io/)**: Mocking library for Kotlin.
 
 ##
 ![screenshot](https://github.com/mostafa-tabasi/calorie-tracker/blob/main/screenshots/screenshot_1.png)
