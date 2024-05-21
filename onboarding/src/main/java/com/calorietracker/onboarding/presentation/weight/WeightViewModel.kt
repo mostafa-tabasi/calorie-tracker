@@ -33,7 +33,7 @@ class WeightViewModel @Inject constructor(
         weight = filterOutNumber(
             value,
             maxLength = 3,
-            isDecimal = true,
+            canBeDecimal = true,
         )
     }
 

@@ -19,7 +19,7 @@ hilt = "2.49"
 hiltNavigation = "1.2.0"
 constraint = "1.0.1"
 gson = "2.10.1"
-retrofit = "2.10.0"
+retrofit = "2.11.0"
 loggingInterceptor = "5.0.0-alpha.3"
 room = "2.6.1"
 ksp = "1.9.24-1.0.20"
@@ -27,6 +27,7 @@ coil = "2.6.0"
 serialization = "1.6.3"
 truth = "1.4.2"
 mockk = "1.13.11"
+coroutinesTest = "1.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,6 +61,7 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 io-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+jetbrains-kotlin-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
