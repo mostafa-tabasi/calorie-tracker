@@ -11,6 +11,7 @@ import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.domain.use_case.ValidateAge
 import com.calorietracker.core.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -37,7 +38,7 @@ class AgeViewModel @Inject constructor(
     }
 
     fun onNextClick() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             validateAge(age).run {
                 when (this) {
                     is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))
