@@ -72,12 +72,15 @@ class AgeViewModelTest {
     fun `onNextClick with valid age must send navigate event`() = runBlocking {
         // Given
         val age = 35
+        coEvery { filterOutNumber(any(), any()) } returns age.toString()
         coEvery { validateAge(any()) } returns ValidationResult.Success(age)
+        viewModel.onAgeChange(age.toString())
 
         // When
         viewModel.onNextClick()
 
         // Then
+        coVerify { validateAge(age.toString()) }
         coVerify { preferences.saveAge(age) }
         val event = viewModel.uiEvent.first()
         assertThat(event).isEqualTo(UiEvent.NavigateToNextScreen)

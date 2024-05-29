@@ -11,6 +11,7 @@ import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.domain.use_case.ValidateHeight
 import com.calorietracker.core.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -29,7 +30,7 @@ class HeightViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    fun onWeightChange(value: String) {
+    fun onHeightChange(value: String) {
         height = filterOutNumber(
             value,
             maxLength = 3,
@@ -37,7 +38,7 @@ class HeightViewModel @Inject constructor(
     }
 
     fun onNextClick() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             validateHeight(height).run {
                 when (this) {
                     is ValidationResult.Error -> _uiEvent.send(UiEvent.ShowSnackbar(message))

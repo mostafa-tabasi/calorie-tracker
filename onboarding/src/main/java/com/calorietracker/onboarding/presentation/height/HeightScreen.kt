@@ -47,7 +47,7 @@ fun HeightScreen(
 
     HeightScreenLayout(
         height = viewModel.height,
-        onHeightChange = viewModel::onWeightChange,
+        onHeightChange = viewModel::onHeightChange,
         onNextClick = viewModel::onNextClick,
     )
 }
