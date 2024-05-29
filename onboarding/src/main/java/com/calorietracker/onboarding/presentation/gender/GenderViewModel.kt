@@ -9,6 +9,7 @@ import com.calorietracker.core.domain.model.Gender
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class GenderViewModel @Inject constructor(
     private val preferences: Preferences,
 ) : ViewModel() {
+
     var selectedGender by mutableStateOf<Gender>(Gender.Male)
         private set
 
@@ -29,7 +31,7 @@ class GenderViewModel @Inject constructor(
     }
 
     fun onNextClick() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             preferences.saveGender(selectedGender)
             _uiEvent.send(UiEvent.NavigateToNextScreen)
         }
