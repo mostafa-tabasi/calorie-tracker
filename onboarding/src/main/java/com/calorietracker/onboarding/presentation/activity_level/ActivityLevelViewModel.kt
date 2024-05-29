@@ -9,6 +9,7 @@ import com.calorietracker.core.domain.model.ActivityLevel
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class ActivityLevelViewModel @Inject constructor(
     private val preferences: Preferences,
 ) : ViewModel() {
+
     var selectedLevel by mutableStateOf<ActivityLevel>(ActivityLevel.Medium)
         private set
 
@@ -29,7 +31,7 @@ class ActivityLevelViewModel @Inject constructor(
     }
 
     fun onNextClick() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             preferences.saveActivityLevel(selectedLevel)
             _uiEvent.send(UiEvent.NavigateToNextScreen)
         }
