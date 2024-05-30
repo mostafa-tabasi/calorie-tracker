@@ -55,6 +55,8 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.google.truth)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.io.mockk)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
