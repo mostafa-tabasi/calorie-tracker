@@ -57,6 +57,7 @@ class HeightViewModelTest {
         viewModel.onNextClick()
 
         // Then
+        coVerify { validateHeight(any()) }
         val event = viewModel.uiEvent.first()
         assertThat(event).isEqualTo(UiEvent.ShowSnackbar(validationResultMessage))
     }

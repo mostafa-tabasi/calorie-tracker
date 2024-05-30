@@ -64,6 +64,7 @@ class AgeViewModelTest {
         viewModel.onNextClick()
 
         // Then
+        coVerify { validateAge(any()) }
         val event = viewModel.uiEvent.first()
         assertThat(event).isEqualTo(UiEvent.ShowSnackbar(validationResultMessage))
     }
