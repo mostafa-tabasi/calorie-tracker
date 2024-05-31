@@ -25,7 +25,7 @@ ksp = "2.0.0-1.0.21"
 coil = "2.6.0"
 serialization = "1.6.3"
 truth = "1.4.2"
-mockito = "5.2.1"
+mockitoKotlin = "5.3.1"
 mockk = "1.13.11"
 coroutinesTest = "1.6.0"
 
@@ -60,8 +60,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
-mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
-mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 io-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 jetbrains-kotlin-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 

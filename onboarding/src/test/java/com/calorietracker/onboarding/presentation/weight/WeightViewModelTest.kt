@@ -15,8 +15,8 @@ import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyInt
 import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
-import org.mockito.kotlin.verify
 
 class WeightViewModelTest {
 
