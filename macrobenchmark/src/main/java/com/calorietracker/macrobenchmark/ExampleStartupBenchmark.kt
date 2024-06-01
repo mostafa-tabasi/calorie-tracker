@@ -1,5 +1,6 @@
 package com.calorietracker.macrobenchmark
 
+import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -24,17 +25,26 @@ import org.junit.runner.RunWith
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class ExampleStartupBenchmark {
+
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
     @Test
-    fun startup() = benchmarkRule.measureRepeated(
+    fun startUpCompilationModeNone() = startup(CompilationMode.None())
+
+    @Test
+    fun startUpCompilationModePartial() = startup(CompilationMode.Partial())
+
+    private fun startup(mode: CompilationMode) = benchmarkRule.measureRepeated(
         packageName = "com.calorietracker.android",
         metrics = listOf(StartupTimingMetric()),
         iterations = 5,
         startupMode = StartupMode.COLD,
+        setupBlock = {
+            pressHome()
+        },
+        compilationMode = mode,
     ) {
-        pressHome()
         startActivityAndWait()
     }
 }
