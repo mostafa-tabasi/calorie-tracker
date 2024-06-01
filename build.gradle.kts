@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.googleDaggerHiltAndroid) apply false
     alias(libs.plugins.googleDevtoolsKsp) apply false
     alias(libs.plugins.kotlinSerialization) apply false
+    alias(libs.plugins.androidTest) apply false
 }
