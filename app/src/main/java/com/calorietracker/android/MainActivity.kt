@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,6 +37,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var preferences: Preferences
 
+    @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -42,7 +46,11 @@ class MainActivity : ComponentActivity() {
                 val scaffoldState = rememberScaffoldState()
 
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .semantics {
+                            testTagsAsResourceId = true
+                        },
                     scaffoldState = scaffoldState,
                 ) { paddingValues ->
                     val shouldShowOnboarding = preferences.loadShouldShowOnboarding()

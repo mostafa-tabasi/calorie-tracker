@@ -38,6 +38,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
             isDebuggable = false
+            proguardFiles("baseline-profiles-rules.pro")
         }
     }
     compileOptions {

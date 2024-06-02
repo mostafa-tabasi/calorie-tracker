@@ -3,6 +3,7 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 plugins {
     alias(libs.plugins.androidTest)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.androidxBaselineProfile)
 }
 
 android {
@@ -40,12 +41,19 @@ android {
     experimentalProperties["android.experimental.self-instrumenting"] = true
 
     testOptions.managedDevices.devices {
-        create<ManagedVirtualDevice>("pixel6Api33") {
+        create<ManagedVirtualDevice>("pixel6Api34") {
             device = "Pixel 6"
-            apiLevel = 33
+            apiLevel = 34
             systemImageSource = "aosp"
         }
     }
+}
+
+// This is the configuration block for the Baseline Profile plugin.
+// You can specify to run the generators on a managed devices or connected devices.
+baselineProfile {
+    managedDevices += "pixel6Api34"
+    useConnectedDevices = false
 }
 
 dependencies {

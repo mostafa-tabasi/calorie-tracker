@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -134,7 +135,9 @@ private fun GenderButton(
 private fun NextButton(onNextClick: () -> Unit) {
     ActionButton(
         text = stringResource(id = R.string.next),
-        modifier = Modifier.layoutId("nextButton"),
+        modifier = Modifier
+            .layoutId("nextButton")
+            .testTag("gender:nextButton"),
         onClick = onNextClick,
         isEnabled = true,
     )

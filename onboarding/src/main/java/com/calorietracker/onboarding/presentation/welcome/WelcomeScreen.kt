@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.calorietracker.core.R
@@ -32,6 +33,7 @@ fun WelcomeScreen(
         DescriptionText(description = stringResource(R.string.welcome_text))
         Spacer(modifier = Modifier.height(spacing.medium))
         ActionButton(
+            modifier = Modifier.testTag("welcome:nextButton"),
             text = stringResource(id = R.string.next),
             onClick = onNext,
             isEnabled = true,
