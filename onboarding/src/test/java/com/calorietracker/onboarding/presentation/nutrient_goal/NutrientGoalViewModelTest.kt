@@ -5,11 +5,14 @@ import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.UiText
+import com.calorietracker.onboarding.MainDispatcherRule
 import com.calorietracker.onboarding.domain.use_cases.ValidateNutrients
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyInt
@@ -19,6 +22,10 @@ import org.mockito.Mockito.`when`
 import org.mockito.kotlin.verify
 
 class NutrientGoalViewModelTest {
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var preferences: Preferences
     private lateinit var filterOutNumber: FilterOutNumber
@@ -94,7 +101,7 @@ class NutrientGoalViewModelTest {
     }
 
     @Test
-    fun `OnNextClick with invalid inputs must send show snackbar event`() = runBlocking {
+    fun `OnNextClick with invalid inputs must send show snackbar event`() = runTest {
         // Given
         val validationResultMessage = UiText.DynamicString("message")
         `when`(validateNutrients(anyString(), anyString(), anyString()))
@@ -111,7 +118,7 @@ class NutrientGoalViewModelTest {
 
     @Test
     fun `OnNextClick with valid inputs must save the amounts and send navigate event`() =
-        runBlocking {
+        runTest {
             // Given
             val carbsRatio = 0.3f
             val proteinRatio = 0.4f

@@ -6,10 +6,13 @@ import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.domain.use_case.ValidateWeight
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.UiText
+import com.calorietracker.onboarding.MainDispatcherRule
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyInt
@@ -19,6 +22,10 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 
 class WeightViewModelTest {
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var preferences: Preferences
     private lateinit var filterOutNumber: FilterOutNumber
@@ -51,7 +58,7 @@ class WeightViewModelTest {
     }
 
     @Test
-    fun `onNextClick with invalid weight must send snackbar event`() = runBlocking {
+    fun `onNextClick with invalid weight must send snackbar event`() = runTest {
         // Given
         val errorMessage = UiText.DynamicString("error")
         `when`(validateWeight(anyString()))
@@ -67,7 +74,7 @@ class WeightViewModelTest {
     }
 
     @Test
-    fun `onNextClick with valid weight must save it and send a navigate event`() = runBlocking {
+    fun `onNextClick with valid weight must save it and send a navigate event`() = runTest {
         // Given
         val weight = 62f
         `when`(validateWeight(anyString())).thenReturn(ValidationResult.Success(weight))

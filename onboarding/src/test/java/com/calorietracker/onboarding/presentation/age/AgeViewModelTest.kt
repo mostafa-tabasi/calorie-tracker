@@ -6,16 +6,23 @@ import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.domain.use_case.ValidateAge
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.UiText
+import com.calorietracker.onboarding.MainDispatcherRule
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class AgeViewModelTest {
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var preferences: Preferences
     private lateinit var filterOutNumber: FilterOutNumber
@@ -55,7 +62,7 @@ class AgeViewModelTest {
     }
 
     @Test
-    fun `onNextClick with invalid age must send error snackbar event`() = runBlocking {
+    fun `onNextClick with invalid age must send error snackbar event`() = runTest {
         // Given
         val validationResultMessage = UiText.DynamicString("Error Message")
         coEvery { validateAge(any()) } returns ValidationResult.Error(validationResultMessage)
@@ -70,7 +77,7 @@ class AgeViewModelTest {
     }
 
     @Test
-    fun `onNextClick with valid age must send navigate event`() = runBlocking {
+    fun `onNextClick with valid age must send navigate event`() = runTest {
         // Given
         val age = 35
         coEvery { filterOutNumber(any(), any()) } returns age.toString()

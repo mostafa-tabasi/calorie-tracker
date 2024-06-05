@@ -6,16 +6,23 @@ import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.domain.use_case.ValidateHeight
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.core.utils.UiText
+import com.calorietracker.onboarding.MainDispatcherRule
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class HeightViewModelTest {
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var preferences: Preferences
     private lateinit var filterOutNumber: FilterOutNumber
@@ -48,7 +55,7 @@ class HeightViewModelTest {
     }
 
     @Test
-    fun `onNextClick with invalid height must send show snackbar event`() = runBlocking {
+    fun `onNextClick with invalid height must send show snackbar event`() = runTest {
         // Given
         val validationResultMessage = UiText.DynamicString("message")
         coEvery { validateHeight(any()) } returns ValidationResult.Error(validationResultMessage)
@@ -63,7 +70,7 @@ class HeightViewModelTest {
     }
 
     @Test
-    fun `onNextClick with valid height must save it and send navigate event`() = runBlocking {
+    fun `onNextClick with valid height must save it and send navigate event`() = runTest {
         // Given
         val height = 174
         coEvery { filterOutNumber(any(), any()) } returns height.toString()

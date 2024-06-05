@@ -9,7 +9,6 @@ import com.calorietracker.core.domain.model.Goal
 import com.calorietracker.core.domain.prefrences.Preferences
 import com.calorietracker.core.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -31,7 +30,7 @@ class GoalViewModel @Inject constructor(
     }
 
     fun onNextClick() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             preferences.saveGoal(selectedGoal)
             _uiEvent.send(UiEvent.NavigateToNextScreen)
         }

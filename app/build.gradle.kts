@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.googleDevtoolsKsp)
+    alias(libs.plugins.androidxBaselineProfile)
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     implementation(projects.core)
     implementation(projects.onboarding)
     implementation(projects.tracker)
+    baselineProfile(project(":macrobenchmark"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

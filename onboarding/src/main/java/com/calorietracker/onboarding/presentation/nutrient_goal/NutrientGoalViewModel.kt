@@ -11,7 +11,6 @@ import com.calorietracker.core.domain.use_case.FilterOutNumber
 import com.calorietracker.core.utils.UiEvent
 import com.calorietracker.onboarding.domain.use_cases.ValidateNutrients
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -42,7 +41,7 @@ class NutrientGoalViewModel @Inject constructor(
                 state.copy(proteinsRatio = filterOutNumber(event.ratio, 3, canBeZero = true))
 
             is NutrientGoalEvent.OnNextClick -> {
-                viewModelScope.launch(Dispatchers.IO) {
+                viewModelScope.launch {
                     val result = validateNutrients(
                         carbsRatioText = state.carbsRatio,
                         proteinsRatioText = state.proteinsRatio,
