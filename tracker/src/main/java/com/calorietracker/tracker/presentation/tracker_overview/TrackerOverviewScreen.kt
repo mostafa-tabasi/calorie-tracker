@@ -2,8 +2,11 @@ package com.calorietracker.tracker.presentation.tracker_overview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.calorietracker.core.R
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
@@ -32,10 +36,12 @@ import java.util.Locale
 
 @Composable
 fun TrackerOverviewScreen(
+    innerPadding: PaddingValues,
     onNavigateToSearch: (mealName: String, dayOfMonth: Int, month: Int, year: Int) -> Unit,
     viewModel: TrackerOverviewViewModel = hiltViewModel()
 ) {
     TrackerOverviewLayout(
+        innerPadding = innerPadding,
         state = viewModel.state,
         onNextDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnNextDayClick) },
         onPreviousDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnPreviousDayClick) },
@@ -56,6 +62,7 @@ fun TrackerOverviewScreen(
 
 @Composable
 fun TrackerOverviewLayout(
+    innerPadding: PaddingValues,
     state: TrackerOverviewState,
     onNextDayClick: () -> Unit,
     onPreviousDayClick: () -> Unit,
@@ -69,7 +76,10 @@ fun TrackerOverviewLayout(
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-        NutrientsHeader(state = state)
+        NutrientsHeader(
+            innerPadding = innerPadding,
+            state = state,
+        )
         DaySelector(
             modifier = Modifier
                 .fillMaxWidth()
@@ -144,6 +154,9 @@ fun TrackerOverviewLayout(
                     }
                 )
             }
+            item {
+                Spacer(modifier = Modifier.height(innerPadding.calculateBottomPadding()))
+            }
         }
     }
 }
@@ -153,6 +166,7 @@ fun TrackerOverviewLayout(
 private fun TrackerOverviewPreview() {
     CalorieTrackerTheme {
         TrackerOverviewLayout(
+            innerPadding = PaddingValues(0.dp),
             state = TrackerOverviewState(
                 totalCarbs = 50,
                 totalProteins = 70,

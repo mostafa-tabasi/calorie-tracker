@@ -1,6 +1,7 @@
 package com.calorietracker.onboarding.presentation.gender
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -31,6 +33,7 @@ import com.calorietracker.onboarding.presentation.components.SelectableButton
 
 @Composable
 fun GenderScreen(
+    innerPadding: PaddingValues,
     onNext: () -> Unit,
     viewModel: GenderViewModel = hiltViewModel(),
 ) {
@@ -44,6 +47,7 @@ fun GenderScreen(
     }
 
     GenderScreenLayout(
+        innerPadding = innerPadding,
         selectedGender = viewModel.selectedGender,
         onGenderClick = viewModel::onGenderClick,
         onNextClick = viewModel::onNextClick,
@@ -52,6 +56,7 @@ fun GenderScreen(
 
 @Composable
 fun GenderScreenLayout(
+    innerPadding: PaddingValues,
     selectedGender: Gender,
     onGenderClick: (Gender) -> Unit,
     onNextClick: () -> Unit,
@@ -85,7 +90,7 @@ fun GenderScreenLayout(
                 onGenderClick = { onGenderClick(Gender.Female) },
             )
         }
-        NextButton(onNextClick)
+        NextButton(innerPadding, onNextClick)
     }
 }
 
@@ -132,10 +137,14 @@ private fun GenderButton(
 }
 
 @Composable
-private fun NextButton(onNextClick: () -> Unit) {
+private fun NextButton(
+    innerPadding: PaddingValues,
+    onNextClick: () -> Unit,
+) {
     ActionButton(
         text = stringResource(id = R.string.next),
         modifier = Modifier
+            .padding(bottom = innerPadding.calculateBottomPadding())
             .layoutId("nextButton")
             .testTag("gender:nextButton"),
         onClick = onNextClick,
@@ -147,6 +156,11 @@ private fun NextButton(onNextClick: () -> Unit) {
 @Composable
 private fun GenderScreenPreview() {
     CalorieTrackerTheme {
-        GenderScreenLayout(selectedGender = Gender.Male, {}, {})
+        GenderScreenLayout(
+            PaddingValues(0.dp),
+            selectedGender = Gender.Male,
+            {},
+            {},
+        )
     }
 }

@@ -1,15 +1,17 @@
 package com.calorietracker.onboarding.presentation.height
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -25,7 +27,8 @@ import com.calorietracker.onboarding.presentation.components.UnitTextField
 
 @Composable
 fun HeightScreen(
-    scaffoldState: ScaffoldState,
+    innerPadding: PaddingValues,
+    snackbarHostState: SnackbarHostState,
     onNext: () -> Unit,
     viewModel: HeightViewModel = hiltViewModel(),
 ) {
@@ -36,7 +39,7 @@ fun HeightScreen(
             when (it) {
                 is UiEvent.NavigateToNextScreen -> onNext()
                 is UiEvent.ShowSnackbar ->
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         it.message.asString(context)
                     )
 
@@ -46,6 +49,7 @@ fun HeightScreen(
     }
 
     HeightScreenLayout(
+        innerPadding = innerPadding,
         height = viewModel.height,
         onHeightChange = viewModel::onHeightChange,
         onNextClick = viewModel::onNextClick,
@@ -54,6 +58,7 @@ fun HeightScreen(
 
 @Composable
 private fun HeightScreenLayout(
+    innerPadding: PaddingValues,
     height: String,
     onHeightChange: (String) -> Unit,
     onNextClick: () -> Unit,
@@ -70,7 +75,7 @@ private fun HeightScreenLayout(
             description = stringResource(R.string.whats_your_height),
         )
         HeightTextField(height, onHeightChange)
-        NextButton(onNextClick)
+        NextButton(innerPadding, onNextClick)
     }
 }
 
@@ -108,11 +113,14 @@ private fun HeightTextField(
 
 @Composable
 private fun NextButton(
+    innerPadding: PaddingValues,
     onNextClick: () -> Unit,
 ) {
     ActionButton(
         text = stringResource(id = R.string.next),
-        modifier = Modifier.layoutId("nextButton"),
+        modifier = Modifier
+            .layoutId("nextButton")
+            .padding(bottom = innerPadding.calculateBottomPadding()),
         onClick = onNextClick,
         isEnabled = true,
     )
@@ -122,6 +130,11 @@ private fun NextButton(
 @Composable
 private fun HeightScreenPreview() {
     CalorieTrackerTheme {
-        HeightScreenLayout("174", {}, {})
+        HeightScreenLayout(
+            PaddingValues(0.dp),
+            "174",
+            {},
+            {},
+        )
     }
 }

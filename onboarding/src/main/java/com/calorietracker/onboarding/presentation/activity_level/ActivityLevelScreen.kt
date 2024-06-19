@@ -1,6 +1,7 @@
 package com.calorietracker.onboarding.presentation.activity_level
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -30,6 +32,7 @@ import com.calorietracker.onboarding.presentation.components.SelectableButton
 
 @Composable
 fun ActivityLevelScreen(
+    innerPadding: PaddingValues,
     onNext: () -> Unit,
     viewModel: ActivityLevelViewModel = hiltViewModel(),
 ) {
@@ -43,6 +46,7 @@ fun ActivityLevelScreen(
     }
 
     ActivityLevelScreenLayout(
+        innerPadding = innerPadding,
         selectedLevel = viewModel.selectedLevel,
         onLevelClick = viewModel::onActivityLevelClick,
         onNextClick = viewModel::onNextClick,
@@ -51,6 +55,7 @@ fun ActivityLevelScreen(
 
 @Composable
 private fun ActivityLevelScreenLayout(
+    innerPadding: PaddingValues,
     selectedLevel: ActivityLevel,
     onLevelClick: (ActivityLevel) -> Unit,
     onNextClick: () -> Unit,
@@ -90,7 +95,7 @@ private fun ActivityLevelScreenLayout(
                 onLevelClick = { onLevelClick(ActivityLevel.High) },
             )
         }
-        NextButton(onNextClick)
+        NextButton(innerPadding, onNextClick)
     }
 }
 
@@ -137,10 +142,15 @@ private fun ActivityLevelButton(
 }
 
 @Composable
-private fun NextButton(onNextClick: () -> Unit) {
+private fun NextButton(
+    innerPadding: PaddingValues,
+    onNextClick: () -> Unit,
+) {
     ActionButton(
         text = stringResource(id = R.string.next),
-        modifier = Modifier.layoutId("nextButton"),
+        modifier = Modifier
+            .layoutId("nextButton")
+            .padding(bottom = innerPadding.calculateBottomPadding()),
         onClick = onNextClick,
         isEnabled = true,
     )
@@ -150,6 +160,11 @@ private fun NextButton(onNextClick: () -> Unit) {
 @Composable
 private fun ActivityLevelScreenPreview() {
     CalorieTrackerTheme {
-        ActivityLevelScreenLayout(selectedLevel = ActivityLevel.Medium, {}, {})
+        ActivityLevelScreenLayout(
+            PaddingValues(0.dp),
+            selectedLevel = ActivityLevel.Medium,
+            {},
+            {},
+        )
     }
 }

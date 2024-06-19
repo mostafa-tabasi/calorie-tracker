@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.calorietracker.core.R
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
@@ -31,6 +33,7 @@ import com.calorietracker.tracker.presentation.tracker_overview.TrackerOverviewS
 
 @Composable
 fun NutrientsHeader(
+    innerPadding: PaddingValues,
     modifier: Modifier = Modifier,
     state: TrackerOverviewState,
 ) {
@@ -54,8 +57,10 @@ fun NutrientsHeader(
             )
             .background(color = MaterialTheme.colors.primary)
             .padding(
-                horizontal = spacing.medium,
-                vertical = spacing.small,
+                start = spacing.medium,
+                end = spacing.medium,
+                top = innerPadding.calculateTopPadding() + spacing.small,
+                bottom = spacing.small,
             ),
     ) {
         Row(
@@ -139,6 +144,7 @@ fun NutrientsHeader(
 private fun NutrientsHeaderPreview() {
     CalorieTrackerTheme {
         NutrientsHeader(
+            innerPadding = PaddingValues(0.dp),
             modifier = Modifier,
             state = TrackerOverviewState(
                 totalCarbs = 50,

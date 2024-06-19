@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.compose.material3)
     implementation(libs.dagger.hilt)
     implementation(libs.dagger.hilt.gradle.plugin)
     implementation(libs.androidx.hilt.navigation)

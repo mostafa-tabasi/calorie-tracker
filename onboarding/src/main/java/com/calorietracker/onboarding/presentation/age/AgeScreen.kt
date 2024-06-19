@@ -1,15 +1,17 @@
 package com.calorietracker.onboarding.presentation.age
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -25,7 +27,8 @@ import com.calorietracker.onboarding.presentation.components.UnitTextField
 
 @Composable
 fun AgeScreen(
-    scaffoldState: ScaffoldState,
+    innerPadding: PaddingValues,
+    snackbarHostState: SnackbarHostState,
     onNext: () -> Unit,
     viewModel: AgeViewModel = hiltViewModel(),
 ) {
@@ -36,7 +39,7 @@ fun AgeScreen(
             when (it) {
                 is UiEvent.NavigateToNextScreen -> onNext()
                 is UiEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         message = it.message.asString(context),
                     )
                 }
@@ -47,6 +50,7 @@ fun AgeScreen(
     }
 
     AgeScreenLayout(
+        innerPadding = innerPadding,
         age = viewModel.age,
         onAgeChange = viewModel::onAgeChange,
         onNextClick = viewModel::onNextClick
@@ -55,6 +59,7 @@ fun AgeScreen(
 
 @Composable
 private fun AgeScreenLayout(
+    innerPadding: PaddingValues,
     age: String,
     onAgeChange: (String) -> Unit,
     onNextClick: () -> Unit,
@@ -71,7 +76,7 @@ private fun AgeScreenLayout(
             description = stringResource(R.string.whats_your_age),
         )
         AgeTextField(age, onAgeChange)
-        NextButton(onNextClick)
+        NextButton(innerPadding, onNextClick)
     }
 }
 
@@ -109,11 +114,14 @@ private fun AgeTextField(
 
 @Composable
 private fun NextButton(
+    innerPadding: PaddingValues,
     onNextClick: () -> Unit,
 ) {
     ActionButton(
         text = stringResource(id = R.string.next),
-        modifier = Modifier.layoutId("nextButton"),
+        modifier = Modifier
+            .layoutId("nextButton")
+            .padding(bottom = innerPadding.calculateBottomPadding()),
         onClick = onNextClick,
         isEnabled = true,
     )
@@ -123,6 +131,11 @@ private fun NextButton(
 @Composable
 private fun AgeScreenPreview() {
     CalorieTrackerTheme {
-        AgeScreenLayout("17", {}, {})
+        AgeScreenLayout(
+            PaddingValues(0.dp),
+            "17",
+            {},
+            {},
+        )
     }
 }

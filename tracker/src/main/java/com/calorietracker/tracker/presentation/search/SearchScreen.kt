@@ -2,15 +2,18 @@ package com.calorietracker.tracker.presentation.search
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.calorietracker.core.R
 import com.calorietracker.core.ui.theme.CalorieTrackerTheme
@@ -32,7 +36,8 @@ import java.util.Locale
 
 @Composable
 fun SearchScreen(
-    scaffoldState: ScaffoldState,
+    innerPadding: PaddingValues,
+    snackbarHostState: SnackbarHostState,
     onNavigateUp: () -> Boolean,
     viewModel: SearchViewModel = hiltViewModel(),
     mealName: String,
@@ -47,7 +52,7 @@ fun SearchScreen(
             when (it) {
                 is UiEvent.NavigateUp -> onNavigateUp()
                 is UiEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         message = it.message.asString(context),
                     )
                 }
@@ -58,6 +63,7 @@ fun SearchScreen(
     }
 
     SearchLayout(
+        innerPadding = innerPadding,
         state = viewModel.state,
         mealName = mealName,
         onTextChange = { viewModel.onEvent(SearchEvent.OnQueryChange(it)) },
@@ -82,6 +88,7 @@ fun SearchScreen(
 
 @Composable
 private fun SearchLayout(
+    innerPadding: PaddingValues,
     state: SearchState,
     mealName: String,
     onTextChange: (String) -> Unit,
@@ -98,6 +105,7 @@ private fun SearchLayout(
             .padding(spacing.small),
     ) {
         SearchTextField(
+            modifier = Modifier.padding(top = innerPadding.calculateTopPadding()),
             hint = stringResource(
                 id = R.string.add_meal, mealName.replaceFirstChar { it.titlecase(Locale.ROOT) }
             ),
@@ -127,6 +135,9 @@ private fun SearchLayout(
                             onTrackClick = { onTrackFoodClick(it) }
                         )
                     }
+                    item {
+                        Spacer(modifier = Modifier.height(innerPadding.calculateBottomPadding()))
+                    }
                 }
             }
         }
@@ -139,6 +150,7 @@ private fun SearchLayout(
 private fun SearchLayoutPreview() {
     CalorieTrackerTheme {
         SearchLayout(
+            innerPadding = PaddingValues(0.dp),
             state = SearchState(
                 "",
                 isSearching = true,

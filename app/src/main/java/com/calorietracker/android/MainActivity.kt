@@ -3,10 +3,12 @@ package com.calorietracker.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.semantics
@@ -39,11 +41,12 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
             CalorieTrackerTheme {
                 val navController = rememberNavController()
-                val scaffoldState = rememberScaffoldState()
+                val snackbarHostState = remember { SnackbarHostState() }
 
                 Scaffold(
                     modifier = Modifier
@@ -51,11 +54,10 @@ class MainActivity : ComponentActivity() {
                         .semantics {
                             testTagsAsResourceId = true
                         },
-                    scaffoldState = scaffoldState,
-                ) { paddingValues ->
+                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                ) { innerPadding ->
                     val shouldShowOnboarding = preferences.loadShouldShowOnboarding()
                     NavHost(
-                        modifier = Modifier.padding(paddingValues),
                         navController = navController,
                         startDestination = if (shouldShowOnboarding) Route.Welcome
                         else Route.TrackerOverview,
@@ -64,40 +66,52 @@ class MainActivity : ComponentActivity() {
                             WelcomeScreen(onNext = { navController.navigate(Route.Gender) })
                         }
                         composable<Route.Gender> {
-                            GenderScreen(onNext = { navController.navigate(Route.Age) })
+                            GenderScreen(
+                                innerPadding = innerPadding,
+                                onNext = { navController.navigate(Route.Age) },
+                            )
                         }
                         composable<Route.Age> {
                             AgeScreen(
-                                scaffoldState = scaffoldState,
+                                innerPadding = innerPadding,
+                                snackbarHostState = snackbarHostState,
                                 onNext = { navController.navigate(Route.Height) },
                             )
                         }
                         composable<Route.Height> {
                             HeightScreen(
-                                scaffoldState = scaffoldState,
+                                innerPadding = innerPadding,
+                                snackbarHostState = snackbarHostState,
                                 onNext = { navController.navigate(Route.Weight) },
                             )
                         }
                         composable<Route.Weight> {
                             WeightScreen(
-                                scaffoldState = scaffoldState,
+                                innerPadding = innerPadding,
+                                snackbarHostState = snackbarHostState,
                                 onNext = { navController.navigate(Route.Activity) },
                             )
                         }
                         composable<Route.Activity> {
-                            ActivityLevelScreen(onNext = { navController.navigate(Route.Goal) })
+                            ActivityLevelScreen(
+                                innerPadding = innerPadding,
+                                onNext = { navController.navigate(Route.Goal) })
                         }
                         composable<Route.Goal> {
-                            GoalScreen(onNext = { navController.navigate(Route.NutrientGoal) })
+                            GoalScreen(
+                                innerPadding = innerPadding,
+                                onNext = { navController.navigate(Route.NutrientGoal) })
                         }
                         composable<Route.NutrientGoal> {
                             NutrientGoalScreen(
-                                scaffoldState = scaffoldState,
+                                innerPadding = innerPadding,
+                                snackbarHostState = snackbarHostState,
                                 onNext = { navController.navigate(Route.TrackerOverview) },
                             )
                         }
                         composable<Route.TrackerOverview> {
                             TrackerOverviewScreen(
+                                innerPadding = innerPadding,
                                 onNavigateToSearch = { mealType, dayOfMonth, month, year ->
                                     navController.navigate(
                                         Route.Search(
@@ -112,7 +126,8 @@ class MainActivity : ComponentActivity() {
                         composable<Route.Search> {
                             val args = it.toRoute<Route.Search>()
                             SearchScreen(
-                                scaffoldState = scaffoldState,
+                                innerPadding = innerPadding,
+                                snackbarHostState = snackbarHostState,
                                 onNavigateUp = navController::navigateUp,
                                 mealName = args.mealName,
                                 dayOfMonth = args.dayOfMonth,

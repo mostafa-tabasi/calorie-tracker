@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.compose.material3)
     implementation(libs.google.code.gson)
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.converter.gson)

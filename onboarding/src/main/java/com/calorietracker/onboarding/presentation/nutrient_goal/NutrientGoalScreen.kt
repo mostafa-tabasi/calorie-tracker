@@ -1,15 +1,17 @@
 package com.calorietracker.onboarding.presentation.nutrient_goal
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -25,7 +27,8 @@ import com.calorietracker.onboarding.presentation.components.UnitTextField
 
 @Composable
 fun NutrientGoalScreen(
-    scaffoldState: ScaffoldState,
+    innerPadding: PaddingValues,
+    snackbarHostState: SnackbarHostState,
     onNext: () -> Unit,
     viewModel: NutrientGoalViewModel = hiltViewModel(),
 ) {
@@ -36,7 +39,7 @@ fun NutrientGoalScreen(
             when (it) {
                 is UiEvent.NavigateToNextScreen -> onNext()
                 is UiEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         message = it.message.asString(context),
                     )
                 }
@@ -47,6 +50,7 @@ fun NutrientGoalScreen(
     }
 
     NutrientGoalScreenLayout(
+        innerPadding = innerPadding,
         carbs = viewModel.state.carbsRatio,
         proteins = viewModel.state.proteinsRatio,
         fats = viewModel.state.fatsRatio,
@@ -59,6 +63,7 @@ fun NutrientGoalScreen(
 
 @Composable
 private fun NutrientGoalScreenLayout(
+    innerPadding: PaddingValues,
     carbs: String,
     proteins: String,
     fats: String,
@@ -96,7 +101,7 @@ private fun NutrientGoalScreenLayout(
             unit = stringResource(id = R.string.percent_fats),
             onValueChange = onFatsChange,
         )
-        NextButton(onNextClick)
+        NextButton(innerPadding, onNextClick)
     }
 }
 
@@ -144,11 +149,14 @@ private fun NutrientsTextField(
 
 @Composable
 private fun NextButton(
+    innerPadding: PaddingValues,
     onNextClick: () -> Unit,
 ) {
     ActionButton(
         text = stringResource(id = R.string.next),
-        modifier = Modifier.layoutId("nextButton"),
+        modifier = Modifier
+            .layoutId("nextButton")
+            .padding(bottom = innerPadding.calculateBottomPadding()),
         onClick = onNextClick,
         isEnabled = true,
     )
@@ -158,6 +166,15 @@ private fun NextButton(
 @Composable
 private fun AgeScreenPreview() {
     CalorieTrackerTheme {
-        NutrientGoalScreenLayout("17", "25", "52", {}, {}, {}, {})
+        NutrientGoalScreenLayout(
+            PaddingValues(0.dp),
+            "17",
+            "25",
+            "52",
+            {},
+            {},
+            {},
+            {},
+        )
     }
 }
