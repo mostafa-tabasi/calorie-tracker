@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -105,13 +106,16 @@ private fun SearchLayout(
             .padding(spacing.small),
     ) {
         SearchTextField(
-            modifier = Modifier.padding(top = innerPadding.calculateTopPadding()),
+            modifier = Modifier
+                .padding(top = innerPadding.calculateTopPadding())
+                .testTag("search:searchTextField"),
             hint = stringResource(
                 id = R.string.add_meal, mealName.replaceFirstChar { it.titlecase(Locale.ROOT) }
             ),
             text = state.query,
             onTextChange = onTextChange,
             onSearchClick = onSearchClick,
+            searchButtonTestTag = "search:searchButton"
         )
         Box(
             modifier = Modifier
@@ -129,10 +133,14 @@ private fun SearchLayout(
                 else -> LazyColumn {
                     items(state.foods) {
                         ExpandableTrackableFood(
+                            modifier = Modifier
+                                .testTag("search:trackableFoodLayout:${it.food.name}"),
                             foodState = it,
                             onToggleChange = { onToggleTrackableFood(it.food) },
+                            amountTestTag = "search:amountTextField:${it.food.name}",
                             onAmountChange = { amount -> onFoodAmountChange(it.food, amount) },
-                            onTrackClick = { onTrackFoodClick(it) }
+                            trackButtonTestTag = "search:trackButton:${it.food.name}",
+                            onTrackClick = { onTrackFoodClick(it) },
                         )
                     }
                     item {

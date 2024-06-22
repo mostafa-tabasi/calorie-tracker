@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -100,6 +101,7 @@ fun TrackerOverviewLayout(
                             vertical = spacing.extraSmall,
                         ),
                     meal = meal,
+                    toggleButtonTestTag = "trackerOverview:toggleButton:${meal.mealType.name}",
                     onToggleClick = { onMealToggleClick(meal) },
                     content = {
                         Column(
@@ -135,7 +137,8 @@ fun TrackerOverviewLayout(
                                     .padding(
                                         horizontal = spacing.medium,
                                         vertical = spacing.small,
-                                    ),
+                                    )
+                                    .testTag("trackerOverview:addButton:${meal.mealType.name}"),
                                 text = stringResource(
                                     id = R.string.add_meal,
                                     meal.name.asString(context)

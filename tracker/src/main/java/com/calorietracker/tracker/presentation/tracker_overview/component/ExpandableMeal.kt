@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,6 +56,7 @@ fun ExpandableMeal(
     meal: Meal,
     onToggleClick: () -> Unit,
     content: @Composable () -> Unit,
+    toggleButtonTestTag: String = "",
 ) {
     val context = LocalContext.current
     val spacing = LocalSpacing.current
@@ -91,6 +93,7 @@ fun ExpandableMeal(
                         )
                         Icon(
                             modifier = Modifier
+                                .testTag(toggleButtonTestTag)
                                 .clip(shape = RoundedCornerShape(100))
                                 .clickable { onToggleClick() }
                                 .padding(spacing.extraSmall),
@@ -167,19 +170,21 @@ private fun ExpandableMealPreview() {
                 calories = 372,
                 isExpanded = true,
             ),
-            onToggleClick = {}) {
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .background(color = MaterialTheme.colors.background)
-            ) {
-                Text(
-                    text = "HELLO WORLD",
+            onToggleClick = {},
+            content = {
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                )
-            }
-        }
+                        .padding(horizontal = 16.dp)
+                        .background(color = MaterialTheme.colors.background)
+                ) {
+                    Text(
+                        text = "HELLO WORLD",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                    )
+                }
+            },
+        )
     }
 }

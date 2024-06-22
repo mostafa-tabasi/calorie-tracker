@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +37,7 @@ fun SearchTextField(
     textSize: TextUnit = 16.sp,
     onTextChange: (String) -> Unit,
     onSearchClick: () -> Unit,
+    searchButtonTestTag: String = "",
 ) {
     val spacing = LocalSpacing.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -75,7 +77,9 @@ fun SearchTextField(
                     onSearchClick()
                     keyboardController?.hide()
                 },
-                modifier = Modifier.padding(horizontal = spacing.extraSmall),
+                modifier = Modifier
+                    .padding(horizontal = spacing.extraSmall)
+                    .testTag(searchButtonTestTag),
             ) {
                 Icon(
                     imageVector = Icons.Default.Search,
